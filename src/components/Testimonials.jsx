@@ -32,7 +32,7 @@ const testimonials = [
   },
   {
     quote:
-      "They prioritize the person - personas, journeys, and mapping - before applying any targeting rules.",
+      "Personlyze AI prioritizes the person - personas, journeys, and mapping - before applying any targeting rules.",
     title: "The person comes first.",
     name: "Chief Business Officer",
     position: "Head of Brand",
@@ -43,7 +43,7 @@ const testimonials = [
   },
   {
     quote:
-      "Finally, someone that treats personalization as a strategic discipline rather than just a tech feature.",
+      "Finally, someone that treats personalization as a strategic discipline rather than just a tech feature. Thank you, Personlyze AI.",
     title: "Personalization as a discipline.",
     name: "Head of Growth",
     position: "Head of Growth",
@@ -154,33 +154,15 @@ export default function Testimonial() {
   return (
     <section className="testimonials-section">
 
-      {/* =====================================================
-          HEADER
-          ===================================================== */}
-
+      {/* HEADER */}
       <div className="testimonials-header">
-
-        <div className="testimonials-eyebrow">
-          TESTIMONIALS
-        </div>
-
         <h2 className="testimonials-heading">
-          What leaders say
+          Trusted by industry leaders
         </h2>
-
-        <p className="testimonials-description">
-          From CMOs to brand heads, here’s how teams describe
-          working with Personlyze AI.
-        </p>
-
       </div>
 
-      {/* =====================================================
-          TESTIMONIAL STAGE
-          ===================================================== */}
-
+      {/* TESTIMONIAL STAGE */}
       <div className="testimonial-stage">
-
         <div
           className="testimonial-phones"
           onTouchStart={handleTouchStart}
@@ -188,10 +170,7 @@ export default function Testimonial() {
           onTouchEnd={handleTouchEnd}
         >
 
-          {/* =================================================
-              DESKTOP LEFT CARD
-              ================================================= */}
-
+          {/* DESKTOP LEFT CARD */}
           <div
             className="desktop-testimonial-card desktop-testimonial-card--side desktop-testimonial-card--left"
             onClick={goPrev}
@@ -199,20 +178,12 @@ export default function Testimonial() {
             <PhoneCard item={testimonials[previousIndex]} />
           </div>
 
-
-          {/* =================================================
-              DESKTOP CENTER CARD
-              ================================================= */}
-
+          {/* DESKTOP CENTER CARD */}
           <div className="desktop-testimonial-card desktop-testimonial-card--center">
             <PhoneCard item={current} />
           </div>
 
-
-          {/* =================================================
-              DESKTOP RIGHT CARD
-              ================================================= */}
-
+          {/* DESKTOP RIGHT CARD */}
           <div
             className="desktop-testimonial-card desktop-testimonial-card--side desktop-testimonial-card--right"
             onClick={goNext}
@@ -220,11 +191,7 @@ export default function Testimonial() {
             <PhoneCard item={testimonials[nextIndex]} />
           </div>
 
-
-          {/* =================================================
-              PREVIOUS BUTTON
-              ================================================= */}
-
+          {/* PREVIOUS BUTTON */}
           <button
             type="button"
             className="testimonial-nav-btn testimonial-nav-prev"
@@ -248,11 +215,7 @@ export default function Testimonial() {
             </svg>
           </button>
 
-
-          {/* =================================================
-              MOBILE CARD
-              ================================================= */}
-
+          {/* MOBILE CARD */}
           <div
             className="phone-slot phone-slot-primary"
             key={activeIndex}
@@ -260,11 +223,7 @@ export default function Testimonial() {
             <PhoneCard item={current} />
           </div>
 
-
-          {/* =================================================
-              NEXT BUTTON
-              ================================================= */}
-
+          {/* NEXT BUTTON */}
           <button
             type="button"
             className="testimonial-nav-btn testimonial-nav-next"
@@ -290,13 +249,8 @@ export default function Testimonial() {
 
         </div>
 
-
-        {/* =====================================================
-            DOTS
-            ===================================================== */}
-
+        {/* DOTS */}
         <div className="testimonial-dots">
-
           {testimonials.map((_, i) => (
             <button
               key={i}
@@ -308,7 +262,6 @@ export default function Testimonial() {
               aria-label={`Go to testimonial ${i + 1}`}
             />
           ))}
-
         </div>
 
       </div>
@@ -316,7 +269,6 @@ export default function Testimonial() {
     </section>
   );
 }
-
 
 /* =========================================================
    TESTIMONIAL CARD
@@ -328,31 +280,26 @@ function PhoneCard({ item }) {
       className={`phone-card${item.dark ? " phone-card--on-dark" : ""}`}
       style={{ backgroundColor: item.bg }}
     >
-
       <div className="phone-card-content">
-
-        <h3 className="phone-card-title">
-          {item.title}
-        </h3>
+        {item.title && (
+          <h3 className="phone-card-title">
+            {item.title}
+          </h3>
+        )}
 
         <p className="phone-card-quote">
           “{item.quote}”
         </p>
-
       </div>
-
 
       <div className="phone-divider" />
 
-
       <div className="phone-author">
-
         <div className="phone-avatar">
           {item.initials}
         </div>
 
         <div className="phone-author-text">
-
           <span className="phone-author-name">
             {item.name}
           </span>
@@ -360,15 +307,14 @@ function PhoneCard({ item }) {
           <span className="phone-author-role">
             {item.company}
           </span>
-
         </div>
 
-        <span className="phone-tag">
-          {item.tag}
-        </span>
-
+        {item.tag && (
+          <span className="phone-tag">
+            {item.tag}
+          </span>
+        )}
       </div>
-
     </article>
   );
 }

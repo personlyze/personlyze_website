@@ -1195,3 +1195,28 @@
 .testimonials-section .desktop-testimonial-card .phone-card--on-dark::before {
   color: rgba(255, 255, 255, 0.45);
 }
+
+/* Ensure titles remain visible and responsive across desktop and mobile */
+.phone-card-title {
+  display: block !important;
+  font-family: "Gilroy-Heavy", sans-serif;
+  font-size: clamp(16px, 1.3vw, 22px);
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  color: inherit;
+}
+
+/* Ensure desktop cards have sufficient vertical space for both title and quote */
+.desktop-testimonial-card .phone-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: visible;
+}
+
+/* Ensure dark background cards keep text legible */
+.phone-card--on-dark .phone-card-title,
+.phone-card--on-dark .phone-card-quote {
+  color: #ffffff;
+}
