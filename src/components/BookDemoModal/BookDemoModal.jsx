@@ -23,18 +23,19 @@ function BookDemoModal({ isOpen, onClose }) {
 
   // Mount immediately on open; keep mounted briefly on close so the
   // exit transition (defined in BookDemoModal.css) can play out.
+  if (isOpen && !shouldRender) {
+    setShouldRender(true);
+  }
+
   useEffect(() => {
-    if (isOpen) {
-      setShouldRender(true);
-    } else if (shouldRender) {
-      const timer = setTimeout(() => {
-        setShouldRender(false);
-        setForm(INITIAL_FORM);
-        setErrors({});
-        setStatus("idle");
-      }, 280);
-      return () => clearTimeout(timer);
-    }
+    if (isOpen || !shouldRender) return undefined;
+    const timer = setTimeout(() => {
+      setShouldRender(false);
+      setForm(INITIAL_FORM);
+      setErrors({});
+      setStatus("idle");
+    }, 280);
+    return () => clearTimeout(timer);
   }, [isOpen, shouldRender]);
 
   // ESC to close.

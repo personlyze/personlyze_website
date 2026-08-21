@@ -107,10 +107,6 @@ export default function MobileCardTransitionSection() {
   const trackRefs = useRef([]);
   const dragRefs = useRef(CARDS.map(() => ({ dragging: false, startX: 0, dx: 0, pointerId: null })));
 
-  cardRefs.current = [];
-  descWrapRefs.current = [];
-  trackRefs.current = [];
-
   const setCardRef = (i) => (el) => {
     cardRefs.current[i] = el;
   };

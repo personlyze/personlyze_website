@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Workspace.css";
 import workspaceImg from "../assets/workspace.png";
 import workspaceMobileImg from "../assets/workspace-mobile.jpeg";
-import { useBookDemoModal } from "../context/BookDemoModalContext";
+import { useBookDemoModal } from "../context/useBookDemoModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -262,16 +262,6 @@ export default function Workspace() {
     return () => observer.disconnect();
   }, [isMobile]);
 
-  /* ── Pause inline video while the (mobile-only) modal is open. ── */
-  useEffect(() => {
-    if (!isMobile || !mp4Ref.current) return;
-    if (modalOpen && isPlaying) {
-      mp4Ref.current.pause();
-      setIsPlaying(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modalOpen, isMobile]);
-
   /* ── When the mobile clip finishes naturally, reset to the
      poster/cover state instead of holding on the last frame.
      UNCHANGED. ── */
@@ -324,6 +314,13 @@ export default function Workspace() {
 
   const openModal = (e) => {
     if (e) e.stopPropagation();
+
+    // Pause the inline (mobile-only) video while the modal is open.
+    if (isMobile && isPlaying && mp4Ref.current) {
+      mp4Ref.current.pause();
+      setIsPlaying(false);
+    }
+
     setModalOpen(true);
   };
 

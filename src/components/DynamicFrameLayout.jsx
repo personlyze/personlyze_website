@@ -42,32 +42,23 @@ const getPos = (index) => ({ row: Math.floor(index / 3), col: index % 3 });
 
 /* ── Letter-eraser hook (hover title effect) ──────────────── */
 function useLetterErase(fullText, active) {
-  const [displayed, setDisplayed] = useState(fullText);
+  // Number of leading letters erased so far; only meaningful while active.
+  const [erased, setErased] = useState(0);
   const timerRef = useRef(null);
 
   useEffect(() => {
-    if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
-    if (active) {
-      let len = fullText.length;
-      timerRef.current = setInterval(() => {
-        len -= 1;
-        if (len <= 0) {
-          setDisplayed("");
-          clearInterval(timerRef.current);
-          timerRef.current = null;
-        } else {
-          setDisplayed(fullText.slice(fullText.length - len));
-        }
-      }, 40);
-    } else {
-      setDisplayed(fullText);
-    }
+    if (!active) return undefined;
+    timerRef.current = setInterval(() => {
+      setErased((n) => n + 1);
+    }, 40);
     return () => {
-      if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+      setErased(0);
     };
   }, [active, fullText]);
 
-  return displayed;
+  return active ? fullText.slice(erased) : fullText;
 }
 
 /* ============================================================
@@ -85,7 +76,6 @@ const IndustryCard = memo(function IndustryCard({
     if (!v) return;
     if (isHovered) {
       v.muted = true;
-      try { v.currentTime = v.currentTime; } catch { /* ignore */ }
       const p = v.play();
       if (p && typeof p.catch === "function") p.catch(() => {});
     } else {
@@ -144,21 +134,17 @@ export default function DynamicFrameLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const [hovered, setHovered] = useState(null);
+  const [renderedPath, setRenderedPath] = useState(location.pathname);
 
   // Reset the expanded/hovered card whenever this route becomes active again.
   // Fixes: navigating to an Industry page and back left the grid showing the
   // previously hovered/clicked card's expanded layout instead of the default
   // 3x3 grid, because `hovered` is component state that survives if this
   // component stays mounted across the route change.
-  useEffect(() => {
+  if (renderedPath !== location.pathname) {
+    setRenderedPath(location.pathname);
     setHovered(null);
-  }, [location.pathname]);
-
-  // Safety net: also clear on unmount so no stale index can leak into a
-  // future mount of this component.
-  useEffect(() => {
-    return () => setHovered(null);
-  }, []);
+  }
 
   const { colTemplate, rowTemplate } = useMemo(() => {
     if (hovered === null) return { colTemplate: "repeat(3, 1fr)", rowTemplate: "repeat(3, 1fr)" };

@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import gsap from "gsap";
 import industries from "../data/industries";
 import MobileIndustryLanding from "./MobileIndustryLanding";
-import { useBookDemoModal } from "../context/BookDemoModalContext";
+import { useBookDemoModal } from "../context/useBookDemoModal";
 import "./IndustryLanding.css";
 
 import realEstateVideo from "../assets/real-estate.mp4";
@@ -173,6 +173,7 @@ export default function IndustryLanding() {
   const [activeChallengeIndex, setActiveChallengeIndex] = useState(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const [renderedSlug, setRenderedSlug] = useState(slug);
 
   const challengeCardRefs = useRef([]);
   const detailHeaderRef = useRef(null);
@@ -187,11 +188,6 @@ export default function IndustryLanding() {
   // same elements — see the fix note above the entrance effect below.
   const challengesEntranceTlRef = useRef(null);
   const detailEntranceTlRef = useRef(null);
-
-  // Reset ref buckets every render so stale nodes from a previous stage
-  // never linger in the array GSAP animates against.
-  challengeCardRefs.current = [];
-  detailCardRefs.current = [];
 
   /* --------------------------------------------------------------------
    * ROOT CAUSE OF THE "hero cut off / already scrolled" BUG:
@@ -213,22 +209,24 @@ export default function IndustryLanding() {
    *      industry already sitting in the "detail" carousel stage from the
    *      previous one.
    *
-   * FIX: whenever `slug` changes, synchronously (before paint, via
-   * useLayoutEffect) reset the desktop stage/carousel state back to the
-   * initial "challenges" view and force the window to scroll to the top.
-   * Using useLayoutEffect (not useEffect) avoids any visible flash of the
-   * wrong scroll position or wrong stage. This only touches this
-   * component's own state and window.scrollTo — it doesn't alter
-   * history.scrollRestoration or push/pop history entries, so normal
+   * FIX: whenever `slug` changes, reset the desktop stage/carousel state
+   * back to the initial "challenges" view during render (so the new slug is
+   * never painted with the previous industry's stage) and force the window
+   * to scroll to the top before paint via useLayoutEffect. This only
+   * touches this component's own state and window.scrollTo — it doesn't
+   * alter history.scrollRestoration or push/pop history entries, so normal
    * browser back/forward navigation is unaffected.
    * -------------------------------------------------------------------- */
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
+  if (renderedSlug !== slug) {
+    setRenderedSlug(slug);
     setStage("challenges");
     setActiveChallengeIndex(null);
     setCarouselIndex(0);
     setIsTransitioning(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
   }, [slug]);
 
   /* Entrance animation whenever we land on a stage (challenges or detail). */
@@ -323,7 +321,7 @@ export default function IndustryLanding() {
       }
       return () => tl.kill();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [stage, activeChallengeIndex, isMobile, industry]);
 
   /* Slide the carousel track whenever the window position changes. Measures
@@ -338,7 +336,7 @@ export default function IndustryLanding() {
     const gap = 24;
     const distance = (cardWidth + gap) * carouselIndex;
     gsap.to(track, { x: -distance, duration: 0.65, ease: "power3.inOut" });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [carouselIndex, stage, activeChallengeIndex, isMobile, industry]);
 
   /* Keep the carousel aligned if the window resizes (no animation, just snap). */
