@@ -6,36 +6,43 @@ import "./DesktopCardTransitionSection.css";
 import strategicImg from "../assets/Strategic.png";
 import creativeImg from "../assets/Creative.png";
 import aiImg from "../assets/AI.png";
+
 const CARD_IMAGES = [strategicImg, creativeImg, aiImg];
 gsap.registerPlugin(ScrollTrigger);
+
 // Live viewport metrics, synced to actual .cts-sticky box
 const vp = {
   w: typeof window !== "undefined" ? window.innerWidth : 1440,
   h: typeof window !== "undefined" ? window.innerHeight : 900,
 };
-// ── Layout constants (desktop only) ─────────────────────────────
-const HERO_W = () => 780;
-const HERO_H = () => 830;
+
+// ── Layout constants (fully responsive desktop calculations) ─────────────────────────────
+const HERO_W = () => Math.min(780, Math.max(400, vp.w * 0.42));
+const HERO_H = () => Math.min(830, Math.round(HERO_W() * (830 / 780)), vp.h * 0.78);
 const HERO_BR = () => 20;
-const SMALL_W = () => 158;
+const SMALL_W = () => Math.min(158, Math.round(HERO_W() * 0.22));
 const SMALL_H = () => Math.round(SMALL_W() / (780 / 830));
 const SMALL_BR = () => 20;
 const THUMB_W = () => 58;
 const THUMB_H = () => Math.round(THUMB_W() / (780 / 830));
 const THUMB_BR = () => 12;
+
 const heroX = () => Math.round((vp.w - HERO_W()) / 2);
 const heroY = () => Math.round((vp.h - HERO_H()) / 2);
 const thumbX = () => Math.round((vp.w - THUMB_W()) / 2);
 const thumbY = () => Math.round(vp.h * 0.72);
 const TL_X = () => heroX() - 200;
 const TL_Y = () => 40;
-const DESC_GAP = 60;
-const DESC_W_DESKTOP = 320;
-const DESC_X_LEFT = () => heroX() - (DESC_W_DESKTOP + DESC_GAP);
-const DESC_X_RIGHT = () => heroX() + HERO_W() + DESC_GAP;
-const DESC_Y = () => heroY() + Math.round(HERO_H() * 0.30);
-const BR_X = () => heroX() + HERO_W() + DESC_GAP + 35;
-const BR_Y = () => DESC_Y() + 450;
+
+const DESC_GAP = () => Math.min(40, Math.max(16, vp.w * 0.02));
+const DESC_W_DESKTOP = () => Math.min(400, Math.max(200, heroX() - DESC_GAP() - 24));
+const DESC_X_LEFT = () => Math.max(16, heroX() - (DESC_W_DESKTOP() + DESC_GAP()));
+const DESC_X_RIGHT = () => Math.min(vp.w - DESC_W_DESKTOP() - 16, heroX() + HERO_W() + DESC_GAP());
+const DESC_Y_TOP = () => 40;
+const DESC_H = () => vp.h - 80;
+const BR_X = () => Math.min(vp.w - SMALL_W() - 20, heroX() + HERO_W() + DESC_GAP() + 35);
+const BR_Y = () => vp.h * 0.65;
+
 // ── Timeline pacing constants ────────────────────────────────────
 const HOLD0_DUR = 1.5;
 const HEADLINE_EXIT_DUR = 0.8;
@@ -58,7 +65,9 @@ const TL_SHRINK_DUR = 1.5;
 const GRANDPARENT_FADE_DUR = 0.4;
 const FINAL_HOLD_DUR = 1.0;
 const FINAL_PAUSE_DUR = 1.2;
+
 const SECTION_HEIGHT = "700vh";
+
 const CARDS = [
   {
     num: "01",
@@ -78,7 +87,6 @@ const CARDS = [
       },
     ],
   },
-
   {
     num: "02",
     title: "DESIGN",
@@ -93,7 +101,6 @@ const CARDS = [
       },
     ],
   },
-
   {
     num: "03",
     title: "ARTIFICIAL\nINTELLIGENCE",
@@ -113,8 +120,10 @@ const CARDS = [
     ],
   },
 ];
+
 const CARD_LINES = CARDS.map((c) => (c.title || "").split("\n"));
 const sideForIndex = (si) => (si % 2 === 0 ? "left" : "right");
+
 export default function DesktopCardTransitionSection() {
   const sectionRef = useRef(null);
   const stickyRef = useRef(null);
@@ -129,21 +138,25 @@ export default function DesktopCardTransitionSection() {
     [useRef(null), useRef(null)],
     [useRef(null), useRef(null)],
   ];
+
   const descSectionRefs = useRef([[], [], []]);
   const setDescSectionRef = (cardIdx, secIdx) => (el) => {
     descSectionRefs.current[cardIdx][secIdx] = el;
   };
+
   useEffect(() => {
     const section = sectionRef.current;
     const E_OUT = "power3.out";
     const E_IN = "power2.in";
     const E_INOUT = "power3.inOut";
+
     const ctx = gsap.context(() => {
       const syncViewportMetrics = () => {
         const rect = stickyRef.current?.getBoundingClientRect();
         vp.w = rect && rect.width > 0 ? rect.width : window.innerWidth;
         vp.h = rect && rect.height > 0 ? rect.height : window.innerHeight;
       };
+
       const renderTyped = (cardIdx, p) => {
         const [l0, l1] = lineRefs[cardIdx];
         if (!l0.current || !l1.current) return;
@@ -153,6 +166,7 @@ export default function DesktopCardTransitionSection() {
         l0.current.textContent = t0.slice(0, Math.min(shown, t0.length));
         l1.current.textContent = shown > t0.length ? t1.slice(0, shown - t0.length) : "";
       };
+
       const applyInitialState = () => {
         syncViewportMetrics();
         gsap.set(headlineRef.current, { opacity: 1, y: 0 });
@@ -171,24 +185,29 @@ export default function DesktopCardTransitionSection() {
           width: SMALL_W(), height: SMALL_H(),
           opacity: 0, zIndex: 4, borderRadius: SMALL_BR(),
         });
+
         descLeftRefs.forEach((r) => {
-          if (r.current) gsap.set(r.current, { x: DESC_X_LEFT(), y: DESC_Y(), opacity: 0 });
+          if (r.current) gsap.set(r.current, { x: DESC_X_LEFT(), y: DESC_Y_TOP(), width: DESC_W_DESKTOP(), height: DESC_H(), opacity: 0 });
         });
         descRightRefs.forEach((r) => {
-          if (r.current) gsap.set(r.current, { x: DESC_X_RIGHT(), y: DESC_Y(), opacity: 0 });
+          if (r.current) gsap.set(r.current, { x: DESC_X_RIGHT(), y: DESC_Y_TOP(), width: DESC_W_DESKTOP(), height: DESC_H(), opacity: 0 });
         });
+
         descSectionRefs.current.forEach((cardSections) => {
           cardSections.forEach((el, si) => {
             if (!el) return;
-            const fromX = sideForIndex(si) === "left" ? -30 : 30;
+            const fromX = sideForIndex(si) === "left" ? -15 : 15;
             gsap.set(el, { opacity: 0, x: fromX, y: 0 });
           });
         });
+
         gsap.set(titleRefs.map((r) => r.current), { opacity: 0 });
         gsap.set(labelRefs.map((r) => r.current), { opacity: 0 });
         CARDS.forEach((_, i) => renderTyped(i, 0));
       };
+
       applyInitialState();
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -201,6 +220,7 @@ export default function DesktopCardTransitionSection() {
           invalidateOnRefresh: true,
         },
       });
+
       const typeText = (cardIdx, atTime, dur) => {
         const proxy = { p: 0 };
         tl.to(
@@ -214,29 +234,35 @@ export default function DesktopCardTransitionSection() {
           atTime,
         );
       };
+
       const cycleSubSections = (cardIdx, startTime, perSectionDur) => {
         const sections = descSectionRefs.current[cardIdx]
           .map((el, si) => ({ el, si }))
           .filter((x) => x.el);
         if (sections.length === 0) return 0;
+
         sections.forEach(({ el, si }, i) => {
           const slotStart = startTime + i * perSectionDur;
           tl.to(el, { opacity: 1, x: 0, y: 0, ease: E_OUT, duration: SECTION_IN_DUR }, slotStart);
           if (i < sections.length - 1) {
-            const outX = sideForIndex(si) === "left" ? -20 : 20;
+            const outX = sideForIndex(si) === "left" ? -15 : 15;
             const outAt = slotStart + perSectionDur - SECTION_OUT_DUR;
             tl.to(el, { opacity: 0, x: outX, y: 0, ease: E_IN, duration: SECTION_OUT_DUR }, outAt);
           }
         });
         return sections.length * perSectionDur;
       };
+
       const descPair = (i) => [descLeftRefs[i].current, descRightRefs[i].current].filter(Boolean);
+
       let t = 0;
       tl.addLabel("hold0", t);
       t += HOLD0_DUR;
+
       CARDS.forEach((card, i) => {
         const growAt = t;
         tl.addLabel(`grow${i}`, growAt);
+
         if (i === 0) {
           tl.to(headlineRef.current, {
             y: "-120%", opacity: 0, ease: E_INOUT, duration: HEADLINE_EXIT_DUR,
@@ -249,16 +275,19 @@ export default function DesktopCardTransitionSection() {
             opacity: 1,
             ease: E_INOUT, duration: TL_SHRINK_DUR,
           }, growAt);
+
           if (i - 2 >= 0) {
             tl.to(cardRefs[i - 2].current, {
               x: () => TL_X() - 24, opacity: 0, ease: E_IN, duration: GRANDPARENT_FADE_DUR,
             }, growAt);
           }
+
           tl.to(descPair(i - 1), { opacity: 0, ease: E_IN, duration: DESC_FADE_OUT_DUR }, growAt);
           tl.to(labelRefs[i - 1].current, { opacity: 0, ease: E_IN, duration: LABEL_OUT_DUR }, growAt);
           tl.to(titleRefs[i - 1].current, { opacity: 0, ease: E_IN, duration: LABEL_OUT_DUR }, growAt);
           tl.call(() => renderTyped(i - 1, 0), null, growAt + 0.3);
         }
+
         tl.to(cardRefs[i].current, {
           x: () => heroX(), y: () => heroY(),
           width: () => HERO_W(), height: () => HERO_H(),
@@ -266,14 +295,19 @@ export default function DesktopCardTransitionSection() {
           opacity: 1, zIndex: 10,
           ease: E_INOUT, duration: CARD_GROW_DUR,
         }, growAt);
+
         tl.to(labelRefs[i].current, { opacity: 1, ease: E_OUT, duration: LABEL_IN_DUR }, growAt + LABEL_IN_DELAY);
         tl.to(titleRefs[i].current, { opacity: 1, ease: E_OUT, duration: LABEL_IN_DUR }, growAt + LABEL_IN_DELAY);
+
         const typeStart = growAt + TYPE_START_DELAY;
         const typeDur = TYPE_DURS[i];
         typeText(i, typeStart, typeDur);
+
         const sectionsStart = typeStart + typeDur + POST_TYPE_PAUSE;
         tl.to(descPair(i), { opacity: 1, ease: E_OUT, duration: DESC_FADE_IN_DUR }, sectionsStart);
+
         const sectionsDuration = cycleSubSections(i, sectionsStart, SECTION_HOLD_DUR);
+
         if (i + 1 < CARDS.length) {
           tl.to(cardRefs[i + 1].current, {
             x: () => BR_X(), y: () => BR_Y(),
@@ -283,6 +317,7 @@ export default function DesktopCardTransitionSection() {
             ease: E_OUT, duration: NEXT_PREVIEW_DUR,
           }, sectionsStart + NEXT_PREVIEW_DELAY);
         }
+
         const holdEnd = sectionsStart + sectionsDuration + HOLD_AFTER_SECTIONS;
         if (i === CARDS.length - 1) {
           tl.to({}, { duration: FINAL_HOLD_DUR }, holdEnd);
@@ -293,7 +328,9 @@ export default function DesktopCardTransitionSection() {
           t = holdEnd;
         }
       });
+
       ScrollTrigger.addEventListener("refreshInit", applyInitialState);
+
       let lastW = vp.w;
       let lastH = vp.h;
       const handleResize = () => {
@@ -303,18 +340,22 @@ export default function DesktopCardTransitionSection() {
         lastH = vp.h;
         ScrollTrigger.refresh();
       };
+
       window.addEventListener("resize", handleResize);
       window.addEventListener("orientationchange", handleResize);
       window.visualViewport?.addEventListener("resize", handleResize);
+
       return () => {
         ScrollTrigger.removeEventListener("refreshInit", applyInitialState);
         window.removeEventListener("resize", handleResize);
         window.removeEventListener("orientationchange", handleResize);
-        window.visualViewport?.removeEventListener("resize", handleResize);
+        window.visualViewport?.addEventListener("resize", handleResize);
       };
     }, sectionRef);
+
     return () => ctx.revert();
   }, []);
+
   return (
     <section ref={sectionRef} className="cts-section" style={{ height: SECTION_HEIGHT }}>
       <div ref={stickyRef} className="cts-sticky">
@@ -361,6 +402,7 @@ export default function DesktopCardTransitionSection() {
           const rightItems = card.desc
             .map((s, si) => ({ s, si }))
             .filter(({ si }) => sideForIndex(si) === "right");
+
           return (
             <div key={`desc-${card.num}`} className="cts-desc-group">
               <div ref={descLeftRefs[i]} className="cts-desc cts-desc--left">

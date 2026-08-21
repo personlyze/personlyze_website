@@ -57,7 +57,7 @@
   width: clamp(300px, 34vw, 640px);
   height: auto;
   max-width: 100%;
-  transform: translateX(clamp(-20px, -1vw, -10px));
+  transform: translateX(-20px);
 }
 .hero-right {
   display: flex;
@@ -80,7 +80,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 14px;
+  gap: 16px;
   max-width: min(620px, 42vw);
 }
 .hero-headline__line {
@@ -512,7 +512,7 @@
   border: none;
   cursor: pointer;
   font-family: var(--regular, inherit);
-font-size: 35px;
+font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.3px;
   color: rgba(255, 255, 255, 0.85);
@@ -639,7 +639,7 @@ font-size: 35px;
 /* Staggered reveal delays */
 .hero.is-revealed .nav-hamburger-btn.reveal-item { transition-delay: 0.05s; transform: translateY(0); }
 .hero.is-revealed .desktop-nav.reveal-item       { transition-delay: 0.05s; transform: translateX(-50%) translateY(0); }
-.hero.is-revealed .hero-left.reveal-item         { transition-delay: 0.25s; transform: translateX(clamp(12px, 2.2vw, 40px)); filter: blur(0); }
+.hero.is-revealed .hero-left.reveal-item         { transition-delay: 0.25s; transform: translateX(clamp(-60px, -3vw, -30px)); filter: blur(0); }
 .hero.is-revealed .hero-right.reveal-item        { transition-delay: 0.55s; transform: translateX(var(--hero-right-shift, clamp(-140px, -9vw, -60px))); filter: blur(0); }
 .hero.is-revealed .hero-headline.reveal-item     { transition-delay: 0.85s; transform: translateX(0); }
 .hero.is-revealed .hero-demo-btn.reveal-item     { transition-delay: 1.05s; transform: translateX(-50%) translateY(0); }

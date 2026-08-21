@@ -10,67 +10,62 @@ import "./Testimonials.css";
 const testimonials = [
   {
     quote:
-      "Everyone buys MarTech stacks, but Personlyze AI gets the order right: strategy first, technology second.",
+      "Everyone buys MarTech stacks, but Personlyze AI gets the order right: first strategy, then technology.",
     title: "Strategy before technology.",
-    name: "CMO",
+    name: "Chief Marketing Officer",
     position: "CMO",
-    company: "[Company]",
+    company: "Leading Real Estate Brand",
     initials: "C",
-    tag: "Strategy Lead",
     bg: "#dbdce8",
     dark: false,
   },
   {
     quote:
-      "Unlike black-box algorithmic firms, Personlyze AI keeps a strategist, creators and techies in the room at every step.",
+      "Unlike black-box algorithmic firms, Personlyze AI has strategists, creators and techies in the room at every step.",
     title: "Humans in the room, always.",
     name: "VP Marketing",
     position: "VP Marketing",
-    company: "[Company]",
+    company: "B2B SaaS company",
     initials: "V",
-    tag: "Marketing",
     bg: "#aaa3b4",
     dark: false,
   },
   {
     quote:
-      "They prioritize the person - personas, journeys, and mapping—before applying any targeting rules.",
+      "They prioritize the person - personas, journeys, and mapping - before applying any targeting rules.",
     title: "The person comes first.",
-    name: "Head of Brand",
+    name: "Chief Business Officer",
     position: "Head of Brand",
-    company: "[Company]",
+    company: "Fortune 500 company",
     initials: "H",
-    tag: "Brand",
     bg: "#463848",
     dark: true,
   },
   {
     quote:
-      "Finally, an agency that treats personalization as a strategic discipline rather than a tech feature.",
+      "Finally, someone that treats personalization as a strategic discipline rather than just a tech feature.",
     title: "Personalization as a discipline.",
-    name: "[Title]",
-    position: "[Title]",
-    company: "[Company]",
-    initials: "P",
-    tag: "Leadership",
+    name: "Head of Growth",
+    position: "Head of Growth",
+    company: "Retail/D2C Startup",
+    initials: "G",
     bg: "#976775",
     dark: true,
   },
   {
     quote:
-      "Personlyze AI avoids outsourcing judgment to algorithms; they offer rigorous, human-led strategies that start with the customer, not the campaign.",
+      "Personlyze AI doesn't outsource everything to algorithms; They offer rigorous, human-led strategies that start with the customer, not the campaign.",
     title: "Human-led, never automated judgment.",
-    name: "CXO",
+    name: "Chief Revenue Officer",
     position: "CXO",
-    company: "[Company]",
+    company: "Major Hotel Chain",
     initials: "C",
-    tag: "Executive",
     bg: "#c8c1cf",
     dark: false,
   },
 ];
 
-const AUTOPLAY_DELAY = 5000;
+const AUTOPLAY_DELAY = 10000;
 const SWIPE_THRESHOLD = 50;
 
 export default function Testimonial() {

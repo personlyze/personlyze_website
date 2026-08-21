@@ -30,6 +30,40 @@ body {
   overflow-x: hidden;
 }
 
+.desktop-book-demo-button {
+  position: fixed;
+  top: 28px;
+  right: 28px;
+  z-index: 100;
+  border: none;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 14px 22px;
+  font-family: var(--heading, "Avenir Black");
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.desktop-book-demo-button:hover {
+  background: rgba(0, 0, 0, 0.95);
+  transform: translateY(-2px);
+}
+
+.desktop-book-demo-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .desktop-book-demo-button {
+    display: none;
+  }
+}
+
 /* ── Generic panel wrapper ──────────────────────────────────────────────── */
 /*
   .panel is used only for Hero, Workspace and Industries.

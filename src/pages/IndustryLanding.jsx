@@ -778,7 +778,6 @@ function IndustryCard({ card, backgroundImage, label, isVideo }) {
         >
           {label || "\u00A0"}
         </span>
-        <h3 className="industry-card__detail-title">{card.title}</h3>
         <p className="industry-card__detail-text">{card.content}</p>
       </div>
     </div>

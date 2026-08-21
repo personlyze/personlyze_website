@@ -528,10 +528,12 @@
 }
 .industry-card__detail-title {
   font-family: "Avenir Black", var(--heading);
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   font-weight: 900;
   line-height: 1.2;
-  margin: 0 0 14px;
+  margin: 0 -24px 14px -24px;
+  padding: 14px 24px;
+  background: rgba(0, 0, 0, 0.7);
   flex-shrink: 0;
 }
 .industry-card__detail-text {
@@ -579,10 +581,12 @@
 }
 .industry-card--mobile .industry-card__detail-title {
   font-family: "Avenir Black", var(--heading);
-  font-size: 1.7rem;
+  font-size: 2.5rem;
   font-weight: 900;
   line-height: 1.15;
-  margin: 0 0 16px;
+  margin: 0 -24px 14px -24px;
+  padding: 14px 24px;
+  background: rgba(0, 0, 0, 0.7);
   align-self: flex-start;
   flex-shrink: 0;
 }

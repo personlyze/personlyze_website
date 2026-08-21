@@ -11,10 +11,14 @@ import CardTransitionSection from "./components/CardTransitionSection";
 import Footer from "./components/Footer";
 import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
+import DesktopBurgerMenu from "./components/DesktopBurgerMenu";
 
 import IndustryLanding from "./pages/IndustryLanding";
 
-import { BookDemoModalProvider } from "./context/BookDemoModalContext";
+import {
+  BookDemoModalProvider,
+  useBookDemoModal,
+} from "./context/BookDemoModalContext";
 
 import "./App.css";
 
@@ -407,6 +411,35 @@ function HomePage() {
   );
 }
 
+function DesktopBookDemoButton() {
+  const { openBookDemo } = useBookDemoModal();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(mediaQuery.matches);
+
+    update();
+    mediaQuery.addEventListener("change", update);
+    return () => mediaQuery.removeEventListener("change", update);
+  }, []);
+
+  if (isMobile) {
+    return null;
+  }
+
+  return (
+    <button
+      type="button"
+      className="desktop-book-demo-button"
+      onClick={openBookDemo}
+      aria-label="Book a demo"
+    >
+      BOOK A DEMO
+    </button>
+  );
+}
+
 /* =========================
    MAIN APP
 ========================= */
@@ -421,7 +454,8 @@ function App() {
 
   return (
     <BookDemoModalProvider>
-
+      <DesktopBurgerMenu />
+      <DesktopBookDemoButton />
       <Routes>
         <Route path="/" element={<HomePage />} />
 

@@ -3,6 +3,7 @@ import "./Hero.desktop.css";
 import "./Hero.mobile.css";
 import backgroundVideo from "../assets/hero-video.mp4";
 import LogoAnimation from "../assets/Logo animation new.webm";
+import logoStatic from "../assets/logo2.png";
 import { hasIntroPlayed, markIntroPlayed } from "./introSession";
 import { useBookDemoModal } from "../context/BookDemoModalContext";
 

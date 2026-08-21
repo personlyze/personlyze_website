@@ -1,0 +1,163 @@
+/* =========================================================
+   DESKTOP BURGER MENU
+   Fixed to top-left corner, accessible from anywhere on the site.
+   Only visible on desktop (hidden on mobile via media query).
+========================================================= */
+
+.desktop-burger-menu {
+  position: fixed;
+  top: 28px;
+  left: 28px;
+  z-index: 100;
+}
+
+/* ---- Burger Button ---- */
+.desktop-burger-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.desktop-burger-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: scale(1.05);
+}
+
+.desktop-burger-btn:active {
+  transform: scale(0.98);
+}
+
+/* Burger lines */
+.burger-line {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.desktop-burger-btn.is-open .burger-line--1 {
+  transform: rotate(45deg) translateY(10px);
+}
+
+.desktop-burger-btn.is-open .burger-line--2 {
+  opacity: 0;
+}
+
+.desktop-burger-btn.is-open .burger-line--3 {
+  transform: rotate(-45deg) translateY(-10px);
+}
+
+/* ---- Menu Panel ---- */
+.desktop-burger-panel {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  background: rgba(20, 20, 22, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 12px 0;
+  min-width: 200px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  animation: slideInUp 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Navigation ---- */
+.desktop-burger-nav {
+  width: 100%;
+}
+
+.desktop-burger-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.desktop-burger-item {
+  width: 100%;
+}
+
+.desktop-burger-link {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--heading, "Avenir Black");
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.desktop-burger-link:hover {
+  background: rgba(209, 0, 0, 0.15);
+  color: #fff;
+  padding-left: 28px;
+}
+
+.desktop-burger-link:active {
+  transform: scale(0.98);
+}
+
+/* ---- Overlay ---- */
+.desktop-burger-overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  z-index: -1;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---- Mobile Hide ---- */
+@media (max-width: 768px) {
+  .desktop-burger-menu {
+    display: none;
+  }
+}

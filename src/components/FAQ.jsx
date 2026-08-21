@@ -3,49 +3,49 @@ import "./FAQ.css";
 
 const faqs = [
   {
-    question: "What is Personlyze?",
+    question: "What is Personlyze AI?",
     answer:
-      "Personlyze is a strategy-first, AI-powered, hyper-personalization service that helps B2C and B2B brands understand their customers deeply and market to them with precision. We combine strategy, creative, and technology to turn generic marketing into experiences tailored to real buyer behavior.",
+      "Personlyze is a strategy-first, AI-powered, hyper-personalization service that helps B2C and B2B brands understand their customers deeply and market to them with precision. Our domain experts masterfully combine strategy, creative, and technology to turn generic marketing into communication, content and experiences tailored to real buyer behavior.",
   },
   {
     question: "What is the CLASS Framework?",
     answer:
-      'CLASS ("Customer Lifecycle Analysis for Strategy and Scale") is our proprietary methodology for building rich, decision-ready customer personas, going beyond demographics to map how people actually think, decide, and buy. It is the foundation for every persona, journey map, and campaign strategy we deliver.',
+      'CLASS ("Customer Lifecycle Analysis for Strategy and Scale") is our proprietary methodology for building rich, decision-ready customer personas, going beyond demographics to map how people actually think, decide, and buy. It is the foundation for every persona, journey map, strategy and creative we develop.',
   },
   {
     question: "How does a typical engagement work?",
     answer:
-      "We work in three phases: Strategy (understanding your customers and market), Creative (building personas, messaging, and campaign concepts), and Tech (personalization execution and optimization). Clients can engage us for one phase or the full journey.",
+      "We work in the following inter-dependent phases: \n 0. CLASS Workshop (onboarding and pre-prep); \n 1. STRATEGY (understanding your customers and market), \n 2. DESIGN (building personas, messaging, and campaign concepts), and \n 3. ARITIFICIAL INTELLIGENCE (personalization scaling with technology, deployment and optimization). Clients can engage us for one phase or the full journey.",
   },
   {
     question: "Do you build your own technology, or use existing tools?",
     answer:
-      "The Strategy and Creative milestones are entirely led by our expert team. For technology, we operate as a managed-service model using best-in-class execution partners while we continue building our proprietary technology. This gives clients proven solutions today without waiting on a product roadmap.",
+      "The Strategy and Creative milestones are entirely led by our domain experts. Certain parts of the engagement are offered as a managed-service model using best-in-class execution partners. This gives clients proven solutions today without waiting on a product roadmap. Important to note that, at every stage of the engagement, the end-to-end ownership lies with Personlyze AI.",
   },
   {
     question: "What markets do you serve?",
     answer:
-      "We actively work with clients across India, the Middle East, and North America, bringing deep cultural and linguistic context to each market—from vernacular strategy in India to region-specific buyer dynamics elsewhere.",
+      "We offer strategic personalization to clients across India, Middle East, US and Canada, bringing deep cultural and linguistic context to each market - from vernacular strategy in India to region-specific buyer dynamics elsewhere.",
   },
   {
     question: "What industries do you work with?",
     answer:
-      "We've delivered persona and personalization work across real estate, housing developers, retail, home shopping, and other consumer-facing industries where understanding the buyer's decision journey drives revenue. Explore our Services section for more details.",
+      "We deliver strategy-first personalization to partners across Real estate, BFSI & Finance, Automotive & Mobility, Retail & D2C, Health & Wellness, Travel & Hospitality, B2B & SaaS, Fashion & Lifestyle among several other consumer-facing industries where understanding the buyer's decision journey drives revenue. This is addition to category-agnostic  Internal Communication mandates across geographies.Explore our Services section for more details.",
   },
   {
     question: "How is pricing structured?",
     answer:
-      "We offer three engagement models: Phase-Gated (pay as each phase completes), Packaged Project Fee (fixed scope and fixed price), and Retainer + Variable (ongoing partnership with performance-based components). Pricing is available in USD, AED, and INR.",
+      "We offer three engagement models:\n1. Phase-Gated (pay as each phase completes),\n2. Packaged Project Fee (fixed scope and fixed price), and \n3. Retainer + Variable (ongoing partnership with performance-based components). Pricing is available in multiple currencies including USD, AED, and INR.",
   },
   {
     question: "What do we get at the end of a persona/strategy engagement?",
     answer:
-      "You'll typically receive detailed buyer personas, a decision journey map, comparative market analysis, and a market-ready narrative designed to plug directly into your sales and marketing execution.",
+      "Our clients typically receive detailed buyer personas, a decision journey maps for each persona, comparative market analysis, and a market-ready narrative/assets designed to plug directly into your sales and marketing execution.",
   },
   {
     question: "How long does an engagement take?",
     answer:
-      "Timelines vary depending on the scope, but most Strategy-phase deliverables, including personas and journey mapping, are completed within 4–6 weeks. Every timeline is personalized based on your business goals.",
+      "Timelines vary depending on the scope, but most Strategy-phase deliverables, including personas and journey mapping, are completed within 4–6 weeks. Followed by design & development of master  assets, which would take another 4 weeks. Lastly, there's scaling, deployment that happens over 2-3 weeks. Every timeline is personalized based on your business goals.",
   },
   {
     question: "How do we get started?",
