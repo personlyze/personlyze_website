@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import "./MobileIndustryLanding.css";
-import { useBookDemoModal } from "../context/BookDemoModalContext";
+import { useBookDemoModal } from "../context/useBookDemoModal";
 
 import realEstateVideo from "../assets/real-estate.mp4";
 import bfsiVideo from "../assets/bfsi.mp4";
@@ -264,7 +264,8 @@ const handleBackToIndustries = () => {
           slug={slug}
           cards={selectedChallenge.cards}
           cardNumberOffset={challengeCardOffsets[openChallengeIndex]}
-          originEl={cardRefs.current[openChallengeIndex + 1]}
+          originRefs={cardRefs}
+          originKey={openChallengeIndex + 1}
           onClose={handleClose}
           fallbackImage={image}
           onBookDemo={openBookDemo}
@@ -289,7 +290,8 @@ function MobileChallengeOverlay({
   slug,
   cards,
   cardNumberOffset,
-  originEl,
+  originRefs,
+  originKey,
   onClose,
   fallbackImage,
   onBookDemo,
@@ -327,7 +329,7 @@ function MobileChallengeOverlay({
     if (track) void track.offsetWidth;
 
     const ctx = gsap.context(() => {
-      const originRect = originEl?.getBoundingClientRect();
+      const originRect = originRefs.current[originKey]?.getBoundingClientRect();
       const vw = window.innerWidth;
       gsap.set(scrim, { autoAlpha: 0 });
       if (originRect) {
@@ -349,7 +351,7 @@ function MobileChallengeOverlay({
         .to(sheet, { scale: 1, y: 0, autoAlpha: 1, duration: 0.55, ease: "power3.out" }, 0);
     });
     return () => ctx.revert();
-  }, [originEl]);
+  }, [originRefs, originKey]);
 
   /* Close animation (reverse) */
   const runClose = () => {
@@ -359,7 +361,7 @@ function MobileChallengeOverlay({
       onClose();
       return;
     }
-    const originRect = originEl?.getBoundingClientRect();
+    const originRect = originRefs.current[originKey]?.getBoundingClientRect();
     const vw = window.innerWidth;
     const tl = gsap.timeline({ onComplete: onClose });
     tl.to(

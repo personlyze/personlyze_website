@@ -3,8 +3,9 @@ import "./Hero.desktop.css";
 import "./Hero.mobile.css";
 import backgroundVideo from "../assets/hero-video.mp4";
 import LogoAnimation from "../assets/Logo animation new.webm";
+import logoStatic from "../assets/logo3.png";
 import { hasIntroPlayed, markIntroPlayed } from "./introSession";
-import { useBookDemoModal } from "../context/BookDemoModalContext";
+import { useBookDemoModal } from "../context/useBookDemoModal";
 
 // Same fix as in App.jsx, duplicated here so it wins the race regardless
 // of which of the two modules the bundler happens to evaluate first.
@@ -259,12 +260,20 @@ function Hero({ onReveal }) {
   const [isMobile, setIsMobile] = useState(getIsMobile);
 
   // --- Intro state ---------------------------------------------------------
-  const [introDecided, setIntroDecided] = useState(false);
-  const [showIntro, setShowIntro] = useState(false);
-  const [showMobileIntro, setShowMobileIntro] = useState(false);
+  // Decided during the first render so the intro never flashes on a session
+  // where it has already played.
+  const [initialIntro] = useState(() => {
+    if (hasIntroPlayed()) {
+      return { showIntro: false, showMobileIntro: false, revealed: true };
+    }
+    const mobile = getIsMobile();
+    return { showIntro: !mobile, showMobileIntro: mobile, revealed: false };
+  });
+  const [showIntro, setShowIntro] = useState(initialIntro.showIntro);
+  const [showMobileIntro, setShowMobileIntro] = useState(initialIntro.showMobileIntro);
   const [introStep, setIntroStep] = useState(0);
   const [mobileIntroStep, setMobileIntroStep] = useState(0);
-  const [revealed, setRevealed] = useState(false);
+  const [revealed, setRevealed] = useState(initialIntro.revealed);
 
   // --- Mobile nav menu state (lifted up from NavMenu) ----------------------
   // Owning this here lets Hero conditionally render the floating
@@ -281,6 +290,13 @@ function Hero({ onReveal }) {
 
   const { openBookDemo } = useBookDemoModal();
 
+  // Latest onReveal, so the intro timers don't restart when the parent
+  // passes a new callback identity.
+  const onRevealRef = useRef(onReveal);
+  useEffect(() => {
+    onRevealRef.current = onReveal;
+  }, [onReveal]);
+
   // Track viewport changes — only re-render on an actual change.
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 768px)");
@@ -292,29 +308,19 @@ function Hero({ onReveal }) {
     return () => mediaQuery.removeEventListener("change", checkScreen);
   }, []);
 
-  // Decide, exactly once on mount, whether the intro should play.
+  // Side effects of the intro decision made above, exactly once on mount.
   useEffect(() => {
-    const alreadyPlayed = hasIntroPlayed();
-if (alreadyPlayed) {
-  setShowIntro(false);
-  setShowMobileIntro(false);
-  setRevealed(true);
-  onReveal?.();
-}else {
-      if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
-        window.history.scrollRestoration = "manual";
-      }
-      if (typeof window !== "undefined") {
-        window.scrollTo(0, 0);
-      }
-
-      const mobile = getIsMobile();
-      setShowIntro(!mobile);
-      setShowMobileIntro(mobile);
-      setRevealed(false);
+    if (initialIntro.revealed) {
+      onRevealRef.current?.();
+      return;
     }
-    setIntroDecided(true);
-  }, []);
+    if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+    }
+  }, [initialIntro]);
 
   // ---------------------------------------------------------------------
   // Intro scroll lock.
@@ -332,8 +338,6 @@ if (alreadyPlayed) {
   // scrolled position once the intro finishes.
   // ---------------------------------------------------------------------
   useEffect(() => {
-    if (!introDecided) return;
-
     const root = document.documentElement;
     const body = document.body;
 
@@ -345,11 +349,11 @@ if (alreadyPlayed) {
       // globals elsewhere. Guarded so this is a no-op when absent.
       try {
         window.lenis?.start?.();
-      } catch {}
+      } catch { /* not wired up */ }
       try {
         window.ScrollTrigger?.getAll?.().forEach((st) => st.enable());
         window.ScrollTrigger?.refresh?.();
-      } catch {}
+      } catch { /* not wired up */ }
 
       return;
     }
@@ -360,10 +364,10 @@ if (alreadyPlayed) {
 
     try {
       window.lenis?.stop?.();
-    } catch {}
+    } catch { /* not wired up */ }
     try {
       window.ScrollTrigger?.getAll?.().forEach((st) => st.disable(false));
-    } catch {}
+    } catch { /* not wired up */ }
 
     const SCROLL_KEYS = new Set([
       "ArrowUp",
@@ -395,7 +399,7 @@ if (alreadyPlayed) {
       window.removeEventListener("touchmove", blockTouch);
       window.removeEventListener("keydown", blockKeys);
     };
-  }, [introDecided, revealed]);
+  }, [revealed]);
 
   // Background video lifecycle - independent of intro/reveal state.
   // Only forces a real reload when the device category genuinely changes
@@ -416,12 +420,11 @@ if (alreadyPlayed) {
     try {
       el.load();
       el.play().catch(() => {});
-    } catch {}
+    } catch { /* autoplay rejected */ }
   }, [isMobile]);
 
   // Desktop intro sequence.
   useEffect(() => {
-    if (!introDecided) return;
     if (!showIntro) return;
     if (didStartRef.current) return;
     didStartRef.current = true;
@@ -443,18 +446,17 @@ if (alreadyPlayed) {
 setTimeout(() => {
   setShowIntro(false);
   setRevealed(true);
-  onReveal?.();
+  onRevealRef.current?.();
 }, LINE1_APPEAR + LINE1_HOLD + BOTH_HOLD + FADE_OUT),
     ];
 
     return () => {
       timers.forEach(clearTimeout);
     };
-  }, [introDecided, showIntro]);
+  }, [showIntro]);
 
   // Mobile intro sequence.
   useEffect(() => {
-    if (!introDecided) return;
     if (!showMobileIntro) return;
     if (didStartRef.current) return;
     didStartRef.current = true;
@@ -476,14 +478,14 @@ setTimeout(() => {
 setTimeout(() => {
   setShowMobileIntro(false);
   setRevealed(true);
-  onReveal?.();
+  onRevealRef.current?.();
 }, TOP_APPEAR + TOP_HOLD + BOTTOM_HOLD + FADE_OUT),
     ];
 
     return () => {
       timers.forEach(clearTimeout);
     };
-  }, [introDecided, showMobileIntro]);
+  }, [showMobileIntro]);
 
   // ---------------------------------------------------------------------
   // TEMPORARY DEBUG INSTRUMENTATION — remove once the ordering issue is

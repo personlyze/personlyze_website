@@ -1,7 +1,6 @@
-import { createContext, useContext, useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import BookDemoModal from "../components/BookDemoModal/BookDemoModal";
-
-const BookDemoModalContext = createContext(undefined);
+import BookDemoModalContext from "./useBookDemoModal";
 
 export function BookDemoModalProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,17 +20,3 @@ export function BookDemoModalProvider({ children }) {
     </BookDemoModalContext.Provider>
   );
 }
-
-export function useBookDemoModal() {
-  const context = useContext(BookDemoModalContext);
-
-  if (context === undefined) {
-    throw new Error(
-      "useBookDemoModal must be used within a BookDemoModalProvider"
-    );
-  }
-
-  return context;
-}
-
-export default BookDemoModalContext;

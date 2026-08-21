@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useBookDemoModal } from "../context/BookDemoModalContext";
+import { useState, useEffect } from "react";
+import { useBookDemoModal } from "../context/useBookDemoModal";
 import "./Footer.css";
 
 const SOCIALS = [
