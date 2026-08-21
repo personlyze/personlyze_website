@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import "./BookDemoModal.css";
-import { submitBookDemoRequest } from "../../../api/bookDemo";
+
+// ⚠️ PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPTj6b1fKfORut8SBPmGJc-5EKHnaJe_k-oi1CMUhzWMASS3Ucti9O-wr6t_5ovoY-/exec";
 
 const INITIAL_FORM = {
   name: "",
@@ -21,8 +23,6 @@ function BookDemoModal({ isOpen, onClose }) {
   const dialogRef = useRef(null);
   const firstFieldRef = useRef(null);
 
-  // Mount immediately on open; keep mounted briefly on close so the
-  // exit transition (defined in BookDemoModal.css) can play out.
   useEffect(() => {
     if (isOpen) {
       setShouldRender(true);
@@ -37,7 +37,6 @@ function BookDemoModal({ isOpen, onClose }) {
     }
   }, [isOpen, shouldRender]);
 
-  // ESC to close.
   useEffect(() => {
     if (!isOpen) return;
     const handleKeyDown = (e) => {
@@ -47,7 +46,6 @@ function BookDemoModal({ isOpen, onClose }) {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
-  // Lock body scroll while open.
   useEffect(() => {
     if (!isOpen) return;
     const prevOverflow = document.body.style.overflow;
@@ -57,7 +55,6 @@ function BookDemoModal({ isOpen, onClose }) {
     };
   }, [isOpen]);
 
-  // Focus the first field when it opens.
   useEffect(() => {
     if (isOpen) {
       const t = setTimeout(() => firstFieldRef.current?.focus(), 200);
@@ -94,13 +91,19 @@ function BookDemoModal({ isOpen, onClose }) {
 
     setStatus("submitting");
     try {
-      await submitBookDemoRequest({
-        name: form.name.trim(),
-        company: form.company.trim(),
-        email: form.email.trim(),
-        phone: form.phone.trim(),
-        submittedAt: new Date().toISOString(),
+      // Submits to Google Sheet & sends instant email via Google Apps Script
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          company: form.company.trim(),
+          email: form.email.trim(),
+          phone: form.phone.trim(),
+          submittedAt: new Date().toISOString(),
+        }),
       });
+
       setStatus("success");
     } catch {
       setStatus("error");
