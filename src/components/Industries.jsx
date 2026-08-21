@@ -18,11 +18,7 @@ function Industries() {
   return (
     <section className="industries">
       <div className="industries-header">
-        <h2>Personalization for Every Business!</h2>
-
-        <p className="industries-hint">
-          Click on your category to explore →
-        </p>
+        <h2>PERSONALIZATION FOR EVERY BUSINESS</h2>
       </div>
 
       {isMobile ? (

@@ -330,7 +330,7 @@ export default function Results() {
 
         <div className="results-heading-block">
           <h2 className="results-heading" ref={headingRef}>
-            Why <span className="results-brand">personlyze</span><span className="results-ai">.ai</span>
+            WHY <span className="results-brand">PERSONLYZE</span><span className="results-ai">.ai</span>
           </h2>
         </div>
 

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./DesktopCardTransitionSection.css";
+
 // ── Card background images ──
 import strategicImg from "../assets/Strategic.png";
 import creativeImg from "../assets/Creative.png";
@@ -10,13 +11,13 @@ import aiImg from "../assets/AI.png";
 const CARD_IMAGES = [strategicImg, creativeImg, aiImg];
 gsap.registerPlugin(ScrollTrigger);
 
-// Live viewport metrics, synced to actual .cts-sticky box
+// Live viewport metrics
 const vp = {
   w: typeof window !== "undefined" ? window.innerWidth : 1440,
   h: typeof window !== "undefined" ? window.innerHeight : 900,
 };
 
-// ── Layout constants (fully responsive desktop calculations) ─────────────────────────────
+// ── Responsive Layout Calculations ─────────────────────────────
 const HERO_W = () => Math.min(780, Math.max(400, vp.w * 0.42));
 const HERO_H = () => Math.min(830, Math.round(HERO_W() * (830 / 780)), vp.h * 0.78);
 const HERO_BR = () => 20;
@@ -50,7 +51,7 @@ const CARD_GROW_DUR = 1.5;
 const LABEL_IN_DELAY = 0.9;
 const LABEL_IN_DUR = 0.6;
 const LABEL_OUT_DUR = 0.3;
-const TYPE_START_DELAY = 1.5;
+const TYPE_START_DELAY = 1.2;
 const TYPE_DURS = [1.2, 1.4, 1.4];
 const POST_TYPE_PAUSE = 0.3;
 const DESC_FADE_IN_DUR = 0.5;
@@ -121,7 +122,11 @@ const CARDS = [
   },
 ];
 
-const CARD_LINES = CARDS.map((c) => (c.title || "").split("\n"));
+const CARD_LINES = CARDS.map((c) => {
+  const lines = (c.title || "").split("\n");
+  return [lines[0] || "", lines[1] || ""];
+});
+
 const sideForIndex = (si) => (si % 2 === 0 ? "left" : "right");
 
 export default function DesktopCardTransitionSection() {
@@ -131,7 +136,6 @@ export default function DesktopCardTransitionSection() {
   const cardRefs = [useRef(null), useRef(null), useRef(null)];
   const descLeftRefs = [useRef(null), useRef(null), useRef(null)];
   const descRightRefs = [useRef(null), useRef(null), useRef(null)];
-  const titleRefs = [useRef(null), useRef(null), useRef(null)];
   const labelRefs = [useRef(null), useRef(null), useRef(null)];
   const lineRefs = [
     [useRef(null), useRef(null)],
@@ -159,12 +163,15 @@ export default function DesktopCardTransitionSection() {
 
       const renderTyped = (cardIdx, p) => {
         const [l0, l1] = lineRefs[cardIdx];
-        if (!l0.current || !l1.current) return;
+        if (!l0 || !l0.current) return;
         const [t0, t1] = CARD_LINES[cardIdx];
         const total = t0.length + t1.length;
         const shown = Math.round(gsap.utils.clamp(0, 1, p) * total);
+
         l0.current.textContent = t0.slice(0, Math.min(shown, t0.length));
-        l1.current.textContent = shown > t0.length ? t1.slice(0, shown - t0.length) : "";
+        if (l1 && l1.current) {
+          l1.current.textContent = shown > t0.length ? t1.slice(0, shown - t0.length) : "";
+        }
       };
 
       const applyInitialState = () => {
@@ -201,7 +208,6 @@ export default function DesktopCardTransitionSection() {
           });
         });
 
-        gsap.set(titleRefs.map((r) => r.current), { opacity: 0 });
         gsap.set(labelRefs.map((r) => r.current), { opacity: 0 });
         CARDS.forEach((_, i) => renderTyped(i, 0));
       };
@@ -284,7 +290,6 @@ export default function DesktopCardTransitionSection() {
 
           tl.to(descPair(i - 1), { opacity: 0, ease: E_IN, duration: DESC_FADE_OUT_DUR }, growAt);
           tl.to(labelRefs[i - 1].current, { opacity: 0, ease: E_IN, duration: LABEL_OUT_DUR }, growAt);
-          tl.to(titleRefs[i - 1].current, { opacity: 0, ease: E_IN, duration: LABEL_OUT_DUR }, growAt);
           tl.call(() => renderTyped(i - 1, 0), null, growAt + 0.3);
         }
 
@@ -297,7 +302,6 @@ export default function DesktopCardTransitionSection() {
         }, growAt);
 
         tl.to(labelRefs[i].current, { opacity: 1, ease: E_OUT, duration: LABEL_IN_DUR }, growAt + LABEL_IN_DELAY);
-        tl.to(titleRefs[i].current, { opacity: 1, ease: E_OUT, duration: LABEL_IN_DUR }, growAt + LABEL_IN_DELAY);
 
         const typeStart = growAt + TYPE_START_DELAY;
         const typeDur = TYPE_DURS[i];
@@ -349,7 +353,7 @@ export default function DesktopCardTransitionSection() {
         ScrollTrigger.removeEventListener("refreshInit", applyInitialState);
         window.removeEventListener("resize", handleResize);
         window.removeEventListener("orientationchange", handleResize);
-        window.visualViewport?.addEventListener("resize", handleResize);
+        window.visualViewport?.removeEventListener("resize", handleResize);
       };
     }, sectionRef);
 
@@ -377,24 +381,18 @@ export default function DesktopCardTransitionSection() {
             <div className="cts-card__topleft">
               <span className="cts-card__num">{card.num}</span>
               <div ref={labelRefs[i]} className="cts-card__label">
-                {(card.title || "").split("\n").map((line, li) => (
-                  <span key={li} className="cts-card__label-line">{line}</span>
+                {(card.title || "").split("\n").map((_, li) => (
+                  <span
+                    key={li}
+                    ref={lineRefs[i][li]}
+                    className="cts-card__label-line"
+                  />
                 ))}
               </div>
             </div>
-            <h2 ref={titleRefs[i]} className="cts-card__title">
-              {(card.title || "").split("\n").map((line, li) => (
-                <span
-                  key={li}
-                  ref={lineRefs[i][li]}
-                  className="cts-card__title-line"
-                >
-                  {line}
-                </span>
-              ))}
-            </h2>
           </div>
         ))}
+
         {CARDS.map((card, i) => {
           const leftItems = card.desc
             .map((s, si) => ({ s, si }))

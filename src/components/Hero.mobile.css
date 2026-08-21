@@ -134,7 +134,7 @@ body.intro-scroll-lock {
 }
 
 .mobile-split-intro__bottom-word {
-  font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Gilroy-Thin";
   font-weight: 500;
 
   color: #e50914;
@@ -648,7 +648,7 @@ font-size: 50px !important;
   }
 
   .mobile-split-intro__bottom-word {
-    font-size: clamp(20px, 6vw, 30px);
+    font-size: clamp(50px, 6vw, 30px);
   }
 
   .nav-panel {

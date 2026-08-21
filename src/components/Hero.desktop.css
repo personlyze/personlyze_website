@@ -44,7 +44,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  padding: 0 clamp(32px, 5.5vw, 96px);
+  padding: 0 clamp(64px, 10vw, 140px);
 }
 .hero-left {
   display: flex;
@@ -146,7 +146,7 @@
 .brand-name,
 .brand-dot,
 .brand-ai {
-  font-size: clamp(52px, 6.5vw, 108px);
+  font-size: clamp(100px, 11vw, 150px);
   font-family: var(--heading);
 }
 .brand-name { color: #fff;    letter-spacing: -0.045em; }
