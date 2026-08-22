@@ -1,3 +1,27 @@
+/* Fix the entire header bar to the screen */
+.header, 
+header, 
+.navbar {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 9999 !important; /* Keeps header above all scrolling content */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  pointer-events: none; /* Prevents invisible header background from blocking page clicks */
+}
+
+/* Re-enable button clicks */
+.header *, 
+header *, 
+.navbar * {
+  pointer-events: auto;
+}
+
 * {
   margin: 0;
   padding: 0;

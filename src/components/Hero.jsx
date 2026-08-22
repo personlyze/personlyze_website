@@ -7,6 +7,20 @@ import logoStatic from "../assets/logo2.png";
 import { hasIntroPlayed, markIntroPlayed } from "./introSession";
 import { useBookDemoModal } from "../context/BookDemoModalContext";
 
+function App() {
+  return (
+    <div className="app-container">
+      {/* 1. Header MUST be outside section components */}
+      <Header /> 
+
+      {/* 2. Main Page Sections */}
+      <Hero />
+      <DesktopCardTransitionSection />
+      {/* other components */}
+    </div>
+  );
+}
+
 // Same fix as in App.jsx, duplicated here so it wins the race regardless
 // of which of the two modules the bundler happens to evaluate first.
 // Idempotent — safe to run twice.
