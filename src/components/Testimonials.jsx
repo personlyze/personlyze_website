@@ -191,6 +191,14 @@ export default function Testimonial() {
             <PhoneCard item={testimonials[nextIndex]} />
           </div>
 
+          {/* MOBILE CARD */}
+          <div
+            className="phone-slot phone-slot-primary"
+            key={activeIndex}
+          >
+            <PhoneCard item={current} />
+          </div>
+
           {/* PREVIOUS BUTTON */}
           <button
             type="button"
@@ -214,14 +222,6 @@ export default function Testimonial() {
               />
             </svg>
           </button>
-
-          {/* MOBILE CARD */}
-          <div
-            className="phone-slot phone-slot-primary"
-            key={activeIndex}
-          >
-            <PhoneCard item={current} />
-          </div>
 
           {/* NEXT BUTTON */}
           <button
