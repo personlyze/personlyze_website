@@ -1,16 +1,8 @@
 /* =========================================================
    Hero — MOBILE overrides only
    Base + desktop styles live in Hero.desktop.css
-   Premium SaaS aesthetic: Apple / Stripe / Linear / Vercel / Notion
 ========================================================= */
 
-/* =========================================================
-   Intro scroll lock
-   Applied to <html>/<body> for the entire time the hero intro
-   is playing (both desktop and mobile intros). This file loads
-   after Hero.desktop.css, so this rule applies regardless of
-   viewport — it is not scoped to a media query on purpose.
-========================================================= */
 html.intro-scroll-lock,
 body.intro-scroll-lock {
   overflow: hidden !important;
@@ -21,7 +13,7 @@ body.intro-scroll-lock {
 
 @media (max-width: 768px) {
   /* =========================================================
-     MOBILE SPLIT-SCREEN INTRO (unchanged behavior)
+     MOBILE SPLIT-SCREEN INTRO
   ========================================================= */
   .mobile-split-intro {
     position: fixed;
@@ -55,41 +47,21 @@ body.intro-scroll-lock {
     justify-content: flex-start;
   }
 
-.mobile-split-intro__half--bottom {
-  position: relative;
-  background: #f4f2ee;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-  padding: 0;
-}
+  .mobile-split-intro__half--bottom {
+    position: relative;
+    background: #f4f2ee;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 0;
+  }
 
-
-  /* ------------------------------------------------------------------
-     FONT OVERRIDE — FOUND & FIXED
-     Old rule: font-family: var(--heading, "Avenir Black", "Helvetica
-     Neue", Arial, sans-serif);
-
-     var()'s 2nd argument is ONLY used when --heading is completely
-     UNDEFINED in the cascade. If --heading is declared anywhere else
-     in the app (a global theme/tokens stylesheet, :root, a layout
-     wrapper) with a different font, that value wins outright — the
-     entire "Avenir Black" fallback chain is discarded, not merged in.
-     That's what was silently swapping the rendered font.
-
-     Fix: hardcode the font stack directly here so nothing outside
-     this file can hijack it. Applied to both the top headline and
-     the "it's human" word below.
-  ------------------------------------------------------------------ */
   .mobile-split-intro__top-text {
     font-family: "Avenir Black", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
     font-weight: 900;
     color: #ffffff;
     text-align: left;
     text-transform: uppercase;
-
-    /* Stacks the three explicit line spans below in tight, locked
-       lines instead of relying on browser auto-wrap. */
     display: flex;
     flex-direction: column;
     letter-spacing: -1.5px;
@@ -105,63 +77,42 @@ body.intro-scroll-lock {
       transform 1s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* Each stacked line ("THE FUTURE OF" / "MARKETING IS" / "NOT LOUD").
-     line-height lives here (not on the parent) so leading stays tight
-     and consistent across all three lines. */
-.mobile-split-intro__line {
-  display: block;
-  font-family: "Avenir Black", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-  font-weight: 900;
-  gap: 10px; 
-  line-height: 0.9;
-  letter-spacing: -2px;
-}
+  .mobile-split-intro__line {
+    display: block;
+    font-family: "Avenir Black", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 900;
+    gap: 10px; 
+    line-height: 0.9;
+    letter-spacing: -2px;
+  }
 
-.mobile-split-intro__line--1 {
-  font-size: 45px;   /* THE */
-}
+  .mobile-split-intro__line--1 { font-size: 45px; }
+  .mobile-split-intro__line--2 { font-size: 48px; }
+  .mobile-split-intro__line--3 { font-size: 38px; }
+  .mobile-split-intro__line--4 { font-size: 50px; }
 
-.mobile-split-intro__line--2 {
-  font-size: 48px;   /* FUTURE OF */
-}
+  .mobile-split-intro__bottom-word {
+    font-family: "Gilroy-Thin";
+    font-weight: 500;
+    color: #e50914;
+    font-size: 50px !important;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    width: 100%;
+    margin: 0;
+    text-align: right;
+    padding-right: 28px;
+    padding-top: 12px;
+    align-self: flex-start;
 
-.mobile-split-intro__line--3 {
-  font-size: 38px;   /* MARKETING IS */
-}
-
-.mobile-split-intro__line--4 {
-  font-size: 50px;   /* NOT LOUD */
-}
-
-.mobile-split-intro__bottom-word {
-  font-family: "Gilroy-Thin";
-  font-weight: 500;
-
-  color: #e50914;
-
-font-size: 50px !important;
-  line-height: 1;
-  letter-spacing: -0.02em;
-
-  width: 100%;
-  margin: 0;
-
-  text-align: right;
-
-  padding-right: 28px;   /* right se distance */
-  padding-top: 12px;     /* top se distance */
-
-  align-self: flex-start;
-
-  opacity: 0;
-  filter: blur(10px);
-  transform: translateY(10px);
-
-  transition:
-    opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 1.15s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
-}
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(10px);
+    transition:
+      opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+  }
 
   .mobile-split-intro.step-1 .mobile-split-intro__top-text,
   .mobile-split-intro.step-2 .mobile-split-intro__top-text,
@@ -183,7 +134,6 @@ font-size: 50px !important;
     filter: blur(8px);
   }
 
-  /* Background video preloading */
   .hero-video.is-preloading { opacity: 0; }
   .hero-video.is-ready {
     opacity: 1;
@@ -191,17 +141,7 @@ font-size: 50px !important;
   }
 
   /* =========================================================
-     MOBILE HERO — video-first composition
-     The background video is the focal point. Brand + logo sit
-     as a compact lockup near the bottom of the video (matching
-     the reference layout) instead of a large centered stack.
-
-     `position: relative` is required here because the
-     "Book a Demo" button below is intentionally
-     `position: absolute` — it must anchor to THIS section's own
-     box, not the viewport, so it scrolls away with the rest of
-     Hero's content and can never render on top of any other
-     section.
+     MOBILE HERO
   ========================================================= */
   .hero {
     position: relative;
@@ -215,7 +155,6 @@ font-size: 50px !important;
     object-position: center center;
   }
 
-  /* Slightly deeper overlay for premium contrast under the type */
   .hero .overlay {
     background:
       radial-gradient(
@@ -226,8 +165,6 @@ font-size: 50px !important;
       );
   }
 
-  /* The single centered composition wrapper — now bottom-anchored
-     so the video stays unobstructed for the rest of the frame. */
   .hero-center--mobile {
     position: absolute;
     inset: 0;
@@ -264,7 +201,6 @@ font-size: 50px !important;
     transform: translateY(0);
   }
 
-  /* ---------- Brand: compact bottom lockup ---------- */
   .hero-center--mobile .hero-brand {
     margin: 16px 0 0;
     padding: 0 4px;
@@ -294,39 +230,9 @@ font-size: 50px !important;
     color: #e50914;
   }
 
-  /* ---------- Tagline (kept for markup/back-compat, unused on
-     mobile now that the JSX no longer renders it there) ---------- */
-  .hero-center--mobile .hero-tagline {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 12px;
-    margin-left: 0;
-    width: 100%;
-    gap: 12px;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-center--mobile .tagline-sep {
-    display: inline-block;
-    color: rgba(255, 255, 255, 0.35);
-    font-weight: 300;
-    transform: translateY(-1px);
-  }
-
-  /* =========================================================
-     LOGO — now the first element in the mobile stack (brand
-     text sits directly below it). Bottom-center, static (no
-     glass-circle animation), fades in once with the rest of
-     the stack and then stays visible for the remainder of the
-     hero section. Sized as the primary visual element.
-  ========================================================= */
   .hero-logo-wrap {
-     position: relative;
-     top: 20px; /* Move logo down */
+    position: relative;
+    top: 20px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -336,8 +242,6 @@ font-size: 50px !important;
     transform: translateX(0);
     overflow: visible;
     z-index: 2;
-    /* Scopes paint/layout invalidation to this box on mobile browsers
-       instead of the whole page, reducing compositing overhead. */
     contain: layout paint;
 
     opacity: 0;
@@ -361,9 +265,6 @@ font-size: 50px !important;
     }
   }
 
-  /* Glass-circle expand behind the logo is a desktop-style flourish
-     that competes with the video on mobile — disabled here per the
-     reference layout ("no animation for logo"). */
   .hero-logo-wrap::before {
     content: none;
     display: none;
@@ -382,7 +283,6 @@ font-size: 50px !important;
     filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
   }
 
-  /* ---------- Button ---------- */
   .hero-center--mobile .hero-demo-btn {
     position: static !important;
     left: auto !important;
@@ -416,8 +316,7 @@ font-size: 50px !important;
     transition:
       background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
       border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-      transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-
+      transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .hero-center--mobile .hero-demo-btn:hover,
@@ -437,27 +336,14 @@ font-size: 50px !important;
     transform: translateY(3px);
   }
 
-  /* ---------- Book a Demo (top-left, mobile only) ---------- */
-  /*
-    Was `position: fixed`, which pins the button to the VIEWPORT
-    rather than the Hero section. That meant it could only ever be
-    hidden by JS toggling opacity/pointer-events in sync with scroll —
-    fragile, and exactly what caused it to still render on top of the
-    Workspace / "Who We Are" section.
-
-    Fixed here: `position: absolute` anchors the button to `.hero`
-    itself (`.hero` is `position: relative`, see above), i.e. the
-    button becomes part of the Hero section's own box in normal
-    document flow. Once the user scrolls past Hero's height, the
-    button scrolls away with it automatically — there is no way for
-    it to appear over any later section, and no JS visibility
-    tracking is needed at all.
-  */
+  /* =========================================================
+     PERSISTENT GLOBAL CONTROLS (Top Left & Top Right)
+  ========================================================= */
   .hero-book-demo-btn {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 40;
+    position: fixed !important;
+    top: 20px !important;
+    left: 20px !important;
+    z-index: 9999 !important;
 
     display: inline-flex;
     align-items: center;
@@ -493,21 +379,20 @@ font-size: 50px !important;
     background: #ffffff;
   }
 
-  /* ---------- Nav ---------- */
   .nav-hamburger-btn {
-    top: 20px;
-    right: 20px;
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 9999 !important;
     width: 48px;
     height: 48px;
   }
 
-  /* Shorter, narrower, top-anchored panel instead of a full-screen
-     takeover — reads like a compact SaaS dropdown menu rather than a
-     mobile app drawer. Only dimension/spacing/typography properties
-     are overridden here; the existing slide-in transform + open/close
-     transition defined in Hero.desktop.css is untouched, so the
-     animation behavior is preserved. */
+  /* =========================================================
+     SLIDE-IN NAV PANEL
+  ========================================================= */
   .nav-panel {
+    position: fixed;
     top: 0;
     right: 0;
     left: auto;
@@ -518,6 +403,7 @@ font-size: 50px !important;
     border-radius: 0 0 0 28px;
     overflow-y: auto;
     box-shadow: -24px 24px 64px rgba(0, 0, 0, 0.28);
+    z-index: 10000 !important;
   }
 
   .nav-panel-close {
@@ -559,13 +445,12 @@ font-size: 50px !important;
     font-size: 10.5px;
   }
 
-  /* Desktop intro sizing preserved for other breakpoints */
   .hero-intro__line--1 { font-size: 36px; }
   .hero-intro__line--2 { font-size: 42px; margin-top: 12px; }
 }
 
 /* =========================================================
-   Small phones
+   SMALL PHONES
 ========================================================= */
 @media (max-width: 480px) {
   .hero-center--mobile {
@@ -617,7 +502,7 @@ font-size: 50px !important;
 }
 
 /* =========================================================
-   Short mobile viewports — keep composition centered & tight
+   SHORT MOBILE VIEWPORTS
 ========================================================= */
 @media (max-width: 768px) and (max-height: 700px) {
   .hero-center--mobile .hero-brand {

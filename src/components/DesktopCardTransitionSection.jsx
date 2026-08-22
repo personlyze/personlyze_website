@@ -364,7 +364,7 @@ export default function DesktopCardTransitionSection() {
     <section ref={sectionRef} className="cts-section" style={{ height: SECTION_HEIGHT }}>
       <div ref={stickyRef} className="cts-sticky">
         <h1 ref={headlineRef} className="cts-headline">
-          What we do
+          HOW WE PERSONLYZE
         </h1>
         {CARDS.map((card, i) => (
           <div

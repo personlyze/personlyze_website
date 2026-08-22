@@ -324,7 +324,7 @@ export default function MobileCardTransitionSection() {
           and by then card 01 is simply *already* in its full-screen
           layout, so there's nothing left to animate. */}
       <div className="mcts-heading-section">
-        <h1 ref={headlineRef} className="mcts-headline">What we do</h1>
+        <h1 ref={headlineRef} className="mcts-headline">HOW WE PERSONLYZE</h1>
       </div>
 
       <section
