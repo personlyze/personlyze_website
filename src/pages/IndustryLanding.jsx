@@ -16,8 +16,8 @@ import b2bVideo from "../assets/b2b.mp4";
 import fashionVideo from "../assets/fashion.mp4";
 
 const cardPhotos = {
-  ...import.meta.glob("../card-photos/*.jpg", { eager: true, import: "default" }),
-  ...import.meta.glob("../card-photos/*.png", { eager: true, import: "default" }),
+  ...import.meta.glob("../card-photos/*.webp", { eager: true, import: "default" }),
+  ...import.meta.glob("../card-photos/*.webp", { eager: true, import: "default" }),
 };
 
 /* Hero background video per industry slug. Industries with no entry (or no
@@ -38,10 +38,10 @@ const HERO_VIDEO_BY_SLUG = {
 };
 
 /* Only needed when an industry's image-file prefix differs from its slug
- * (e.g. slug "real-estate" -> files named "real-card-1.jpg"). Any industry
+ * (e.g. slug "real-estate" -> files named "real-card-1.webp"). Any industry
  * NOT listed here automatically falls back to using its own slug as the
  * prefix, so brand-new industries work with zero code changes as long as
- * their image files are named `${slug}-card-${n}.jpg` / `${slug}-problem${n}.png`. */
+ * their image files are named `${slug}-card-${n}.webp` / `${slug}-problem${n}.webp`. */
 const IMAGE_PREFIX_BY_SLUG = {
   "real-estate": "real",
   bfsi: "bfsi",
@@ -65,7 +65,7 @@ function getPrefix(slug) {
 function getCardImage(slug, cardNumber) {
   const prefix = getPrefix(slug);
   if (!prefix) return null;
-  const key = `../card-photos/${prefix}-card-${cardNumber}.jpg`;
+  const key = `../card-photos/${prefix}-card-${cardNumber}.webp`;
   return cardPhotos[key] ?? null;
 }
 
@@ -75,8 +75,8 @@ function getProblemImage(slug, challengeNumber) {
   try {
     const prefix = getPrefix(slug);
     if (!prefix) return null;
-    const png = `../card-photos/${prefix}-problem${challengeNumber}.png`;
-    const jpg = `../card-photos/${prefix}-problem${challengeNumber}.jpg`;
+    const png = `../card-photos/${prefix}-problem${challengeNumber}.webp`;
+    const jpg = `../card-photos/${prefix}-problem${challengeNumber}.webp`;
     return cardPhotos[png] ?? cardPhotos[jpg] ?? null;
   } catch {
     return null;

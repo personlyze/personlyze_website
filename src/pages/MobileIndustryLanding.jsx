@@ -20,8 +20,8 @@ import govtPoliticsVideo from "../assets/govt-politics.mp4";
  * -------------------------------------------------------------------------- */
 
 const cardPhotos = {
-  ...import.meta.glob("../card-photos/*.jpg", { eager: true, import: "default" }),
-  ...import.meta.glob("../card-photos/*.png", { eager: true, import: "default" }),
+  ...import.meta.glob("../card-photos/*.webp", { eager: true, import: "default" }),
+  ...import.meta.glob("../card-photos/*.webp", { eager: true, import: "default" }),
 };
 
 /* Only needed when an industry's image-file prefix differs from its slug.
@@ -66,7 +66,7 @@ function getPrefix(slug) {
 function getCardImage(slug, cardNumber) {
   const prefix = getPrefix(slug);
   if (!prefix) return null;
-  const key = `../card-photos/${prefix}-card-${cardNumber}.jpg`;
+  const key = `../card-photos/${prefix}-card-${cardNumber}.webp`;
   return cardPhotos[key] ?? null;
 }
 
@@ -74,8 +74,8 @@ function getProblemImage(slug, challengeNumber) {
   try {
     const prefix = getPrefix(slug);
     if (!prefix) return null;
-    const png = `../card-photos/${prefix}-problem${challengeNumber}.png`;
-    const jpg = `../card-photos/${prefix}-problem${challengeNumber}.jpg`;
+    const png = `../card-photos/${prefix}-problem${challengeNumber}.webp`;
+    const jpg = `../card-photos/${prefix}-problem${challengeNumber}.webp`;
     return cardPhotos[png] ?? cardPhotos[jpg] ?? null;
   } catch {
     return null;
@@ -84,15 +84,15 @@ function getProblemImage(slug, challengeNumber) {
 
 /* Dedicated background photo for the CTA slide, following the same
  * `{prefix}-...` naming convention as the other card/problem photos
- * (e.g. "real-cta.jpg"). Optional — if a given industry doesn't have one
+ * (e.g. "real-cta.webp"). Optional — if a given industry doesn't have one
  * yet, the caller falls back to the hero image so the slide still gets
  * the same full-bleed photo treatment as every other card. */
 function getCtaImage(slug) {
   try {
     const prefix = getPrefix(slug);
     if (!prefix) return null;
-    const png = `../card-photos/${prefix}-cta.png`;
-    const jpg = `../card-photos/${prefix}-cta.jpg`;
+    const png = `../card-photos/${prefix}-cta.webp`;
+    const jpg = `../card-photos/${prefix}-cta.webp`;
     return cardPhotos[png] ?? cardPhotos[jpg] ?? null;
   } catch {
     return null;

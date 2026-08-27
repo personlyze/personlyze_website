@@ -4,10 +4,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Results.css";
 
 // Update these import paths to match wherever the images live in your project
-import bgConversions from "../assets/Higher Conversions.png";
-import bgCPA from "../assets/Lower CPA.jpg";
-import bgCTR from "../assets/marketing performance.jpg";
-import bgROAS from "../assets/ROAS Improvement.jpg";
+import bgConversions from "../assets/Higher Conversions.webp";
+import bgCPA from "../assets/Lower CPA.webp";
+import bgCTR from "../assets/marketing performance.webp";
+import bgROAS from "../assets/ROAS Improvement.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 

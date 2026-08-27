@@ -4,9 +4,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import "./MobileCardTransitionSection.css";
 
-import strategicImg from "../assets/Strategic.png";
-import creativeImg from "../assets/Creative.png";
-import aiImg from "../assets/AI.png";
+import strategicImg from "../assets/Strategic.webp";
+import creativeImg from "../assets/Creative.webp";
+import aiImg from "../assets/AI.webp";
 
 const CARD_IMAGES = [strategicImg, creativeImg, aiImg];
 

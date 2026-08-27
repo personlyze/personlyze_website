@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Workspace.css";
-import workspaceImg from "../assets/workspace.png";
+import workspaceImg from "../assets/workspace.webp";
 import workspaceMobileImg from "../assets/workspace-mobile.jpeg";
 import { useBookDemoModal } from "../context/BookDemoModalContext";
 

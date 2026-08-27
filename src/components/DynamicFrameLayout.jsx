@@ -14,16 +14,16 @@ import b2bVideo from "../assets/b2b.mp4";
 import fashionVideo from "../assets/fashion.mp4";
 import internalCommsVideo from "../assets/internal-comms.mp4";
 
-import realEstateImg from "../assets/real-estateimg.png";
-import bfsiImg from "../assets/bfsi-img.png";
-import travelImg from "../assets/travelimg.png";
-import healthImg from "../assets/healthimg.png";
-import retailImg from "../assets/Retailimg.png";
-import automotiveImg from "../assets/automotiveimg.png";
-import b2bImg from "../assets/b2bimg.png";
-import fashionImg from "../assets/fashionimg.png";
-import internalCommsImg from "../assets/internal-commsimg.png";
-import govtPoliticsImg from "../assets/govt-politics.png";
+import realEstateImg from "../assets/real-estateimg.webp";
+import bfsiImg from "../assets/bfsi-img.webp";
+import travelImg from "../assets/travelimg.webp";
+import healthImg from "../assets/healthimg.webp";
+import retailImg from "../assets/Retailimg.webp";
+import automotiveImg from "../assets/automotiveimg.webp";
+import b2bImg from "../assets/b2bimg.webp";
+import fashionImg from "../assets/fashionimg.webp";
+import internalCommsImg from "../assets/internal-commsimg.webp";
+import govtPoliticsImg from "../assets/govt-politics.webp";
 
 const industries = [
   { name: "Real Estate",            video: realEstateVideo, image: realEstateImg,    className: "real-estate",            slug: "real-estate"            },
