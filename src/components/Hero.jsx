@@ -523,17 +523,6 @@ function Hero({ onReveal }) {
           <div className={`hero-left reveal-item ${revealed ? "is-revealed" : ""}`}>
             <LogoMedia />
           </div>
-          <div className={`hero-right reveal-item ${revealed ? "is-revealed" : ""}`}>
-            <h1 className="hero-brand">
-              <span className="brand-name">personlyze</span>
-              <span className="brand-dot">.</span>
-              <span className="brand-ai">ai</span>
-            </h1>
-            <div className="hero-tagline">
-              <span className="strategy">strategy-first</span>
-              <span className="personalization">personalization</span>
-            </div>
-          </div>
         </div>
       )}
     </section>
