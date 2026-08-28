@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import "./Hero.desktop.css";
 import "./Hero.mobile.css";
 import backgroundVideo from "../assets/hero-video.mp4";
-import LogoAnimation from "../assets/Logo animation new.webm";
+import LogoAnimation from "../assets/final-logo-desktop.webm";
 import logoStatic from "../assets/logo2.webp";
 import { hasIntroPlayed, markIntroPlayed } from "./introSession";
 import { useBookDemoModal } from "../context/BookDemoModalContext";
