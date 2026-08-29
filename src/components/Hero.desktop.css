@@ -574,36 +574,42 @@ font-size: 15px;
   transform: scaleX(1);
 }
 /* =========================================================
-   CINEMATIC INTRO OVERLAY
-   Headline sizes now scale with clamp()/vw so the intro copy doesn't
-   overflow narrower desktop widths or look tiny on ultra-wide screens.
+   DESKTOP SPLIT-SCREEN INTRO
+   Left half = black, Right half = white
+   Side-by-side split (vs mobile's top/bottom split)
 ========================================================= */
-.hero-intro {
-  position: absolute;
+.desktop-split-intro {
+  position: fixed;
   inset: 0;
   z-index: 30;
   display: flex;
-  align-items: center;
-  justify-content: center;
   pointer-events: none;
-  background: rgba(0, 0, 0, 0.35);
+  opacity: 1;
   transition:
     opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  opacity: 1;
+    filter 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.hero-intro__inner {
-  text-align: center;
-  padding: 0 24px;
-  max-width: min(1000px, 78vw);
+
+.desktop-split-intro__half {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(32px, 4vw, 64px);
 }
-.hero-intro__line {
+
+.desktop-split-intro__half--left {
+  background: #000;
+}
+
+.desktop-split-intro__half--right {
+  background: #f4f2ee;
+}
+
+.desktop-split-intro__line {
   font-family: var(--heading, "Avenir Black");
-  color: #fff;
   letter-spacing: -1px;
   line-height: 1.08;
-  text-shadow: 0 6px 40px rgba(0, 0, 0, 0.5);
   opacity: 0;
   filter: blur(18px);
   transform: translateY(24px);
@@ -612,34 +618,44 @@ font-size: 15px;
     filter 1s cubic-bezier(0.22, 1, 0.36, 1),
     transform 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.hero-intro__line--1 { font-size: clamp(36px, 4.4vw, 64px); }
-.hero-intro__line--2 {
+
+.desktop-split-intro__line--1 {
+  font-size: clamp(36px, 4.4vw, 64px);
+  color: #fff;
+  text-shadow: 0 6px 40px rgba(0, 0, 0, 0.5);
+}
+
+.desktop-split-intro__line--2 {
   font-size: clamp(40px, 5vw, 72px);
   color: #d10000;
-  margin-top: 18px;
+  font-family: "Gilroy-Thin", sans-serif;
+  font-weight: 100;
   transform: translateY(30px) scale(0.96);
 }
+
 /* Step 1: first line in */
-.hero-intro.step-1 .hero-intro__line--1,
-.hero-intro.step-2 .hero-intro__line--1,
-.hero-intro.step-3 .hero-intro__line--1 {
+.desktop-split-intro.step-1 .desktop-split-intro__line--1,
+.desktop-split-intro.step-2 .desktop-split-intro__line--1,
+.desktop-split-intro.step-3 .desktop-split-intro__line--1 {
   opacity: 1;
   filter: blur(0);
   transform: translateY(0);
 }
+
 /* Step 2: second line in */
-.hero-intro.step-2 .hero-intro__line--2,
-.hero-intro.step-3 .hero-intro__line--2 {
+.desktop-split-intro.step-2 .desktop-split-intro__line--2,
+.desktop-split-intro.step-3 .desktop-split-intro__line--2 {
   opacity: 1;
   filter: blur(0);
   transform: translateY(0) scale(1);
 }
+
 /* Step 3: fade out entire overlay */
-.hero-intro.step-3 {
+.desktop-split-intro.step-3 {
   opacity: 0;
   filter: blur(8px);
-  transform: translateY(-12px);
 }
+
 /* =========================================================
    INTRO STATE: hide hero UI until reveal
 ========================================================= */
