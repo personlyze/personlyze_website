@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import "./Hero.desktop.css";
 import "./Hero.mobile.css";
 import backgroundVideo from "../assets/hero-video.mp4";
-import LogoAnimation from "../assets/final-logo-desktop.webm";
+import LogoAnimation from "../assets/Logo-animation-30aug-new.webm";
 import logoStatic from "../assets/logo2.webp";
 import logoTransparent from "../assets/logo-transparent.png";
 import { hasIntroPlayed, markIntroPlayed } from "./introSession";
@@ -442,13 +442,15 @@ function Hero({ onReveal }) {
       </video>
       <div className="overlay"></div>
 
-      {!isMobile && showIntro && (
-        <div className={`hero-intro step-${introStep}`}>
-          <div className="hero-intro__inner">
-            <p className="hero-intro__line hero-intro__line--1">
-              The future of marketing<br />is not loud.
+            {!isMobile && showIntro && (
+        <div className={`desktop-split-intro step-${introStep}`}>
+          <div className="desktop-split-intro__half desktop-split-intro__half--left">
+            <p className="desktop-split-intro__line desktop-split-intro__line--1">
+              THE FTURE OF MARKETING<br />IS NOT LOUD.
             </p>
-            <p className="hero-intro__line hero-intro__line--2">It's human.</p>
+          </div>
+          <div className="desktop-split-intro__half desktop-split-intro__half--right">
+            <p className="desktop-split-intro__line desktop-split-intro__line--2">it's human.</p>
           </div>
         </div>
       )}
