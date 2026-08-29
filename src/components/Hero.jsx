@@ -5,6 +5,7 @@ import "./Hero.mobile.css";
 import backgroundVideo from "../assets/hero-video.mp4";
 import LogoAnimation from "../assets/final-logo-desktop.webm";
 import logoStatic from "../assets/logo2.webp";
+import logoTransparent from "../assets/logo-transparent.png";
 import { hasIntroPlayed, markIntroPlayed } from "./introSession";
 import { useBookDemoModal } from "../context/BookDemoModalContext";
 
@@ -502,7 +503,7 @@ function Hero({ onReveal }) {
         <div className="hero-center hero-center--mobile">
           <div className={`hero-mobile-stack reveal-item ${revealed ? "is-revealed" : ""}`}>
             <div className="hero-logo-wrap">
-              <LogoMedia />
+              <img src={logoTransparent} alt="" aria-hidden="true" className="hero-logo-video" />
             </div>
             <h1 className="hero-brand">
               <span className="brand-name">personlyze</span>

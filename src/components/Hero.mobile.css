@@ -232,7 +232,7 @@ body.intro-scroll-lock {
 
   .hero-logo-wrap {
     position: relative;
-    top: 20px;
+    top: 0px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -273,7 +273,7 @@ body.intro-scroll-lock {
   .hero-center--mobile .hero-logo-video {
     position: relative;
     z-index: 1;
-    width: 290px;
+    width: 145px;
     height: auto;
     display: block;
     margin: 0 auto;
@@ -476,7 +476,7 @@ body.intro-scroll-lock {
   }
 
   .hero-center--mobile .hero-logo-video {
-    width: 235px;
+    width: 118px;
   }
 
   .hero-center--mobile .hero-demo-btn {
@@ -520,7 +520,7 @@ body.intro-scroll-lock {
   }
 
   .hero-center--mobile .hero-logo-video {
-    width: 215px;
+    width: 108px;
   }
 
   .hero-center--mobile .hero-demo-btn {
