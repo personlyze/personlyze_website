@@ -753,3 +753,75 @@
   inset: 0;
   z-index: 999998 !important;
 }
+
+/* Mobile CTA Card */
+.industry-card--mobile.industry-card--cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.industry-card--mobile.industry-card--cta .industry-card__bg-overlay {
+  display: none;
+}
+
+.industry-card--mobile.industry-card--cta .industry-card__detail {
+  display: none;
+}
+
+.industry-card--mobile .industry-card__cta-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Smaller, translucent navigation arrows */
+.mobile-overlay__nav {
+  width: 36px; /* Reduced from ~48px */
+  height: 36px; /* Reduced from ~48px */
+  background: rgba(255, 255, 255, 0.15); /* Translucent */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 18px; /* Smaller arrow icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.mobile-overlay__nav:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+/* Smaller, translucent close button */
+.mobile-overlay__close {
+  width: 32px; /* Reduced from ~40px */
+  height: 32px; /* Reduced from ~40px */
+  background: rgba(0, 0, 0, 0.3); /* Translucent black */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 20px; /* Smaller X */
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 20;
+}
+
+.mobile-overlay__close:hover {
+  background: rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+}

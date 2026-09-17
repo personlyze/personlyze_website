@@ -9,15 +9,6 @@ import logoTransparent from "../assets/logo-transparent.png";
 import { hasIntroPlayed, markIntroPlayed } from "./introSession";
 import { useBookDemoModal } from "../context/BookDemoModalContext";
 
-function App() {
-  return (
-    <div className="app-container">
-      <Hero />
-      {/* other components */}
-    </div>
-  );
-}
-
 if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
   window.history.scrollRestoration = "manual";
 }
@@ -446,7 +437,7 @@ function Hero({ onReveal }) {
         <div className={`desktop-split-intro step-${introStep}`}>
           <div className="desktop-split-intro__half desktop-split-intro__half--left">
             <p className="desktop-split-intro__line desktop-split-intro__line--1">
-              THE FTURE OF MARKETING<br />IS NOT LOUD.
+              THE FUTURE OF MARKETING<br />IS NOT LOUD.
             </p>
           </div>
           <div className="desktop-split-intro__half desktop-split-intro__half--right">

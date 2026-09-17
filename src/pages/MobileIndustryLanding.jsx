@@ -134,21 +134,8 @@ function isVideoCard(card, cardIndexInChallenge, totalCardsInChallenge) {
  * -------------------------------------------------------------------------- */
 function GlassArrowIcon() {
   return (
-    <svg
-      className="mobile-challenge-card__indicator-icon"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path
-        d="M8 16 16 8M16 8H9.5M16 8V14.5"
-        stroke="currentColor"
-        strokeWidth="1.1"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+      <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
     </svg>
   );
 }
@@ -158,11 +145,11 @@ function GlassArrowIcon() {
  * ========================================================================== */
 function MobileIndustryLanding({
   slug,
-  image, // used as the hero video's poster frame while it loads
-  video, // optional explicit override for the hero video source
+  image,
+  video,
   heroTitle,
   heroDescription,
-  challenges, // any number of { problem, cards: [...] }
+  challenges,
 }) {
   const navigate = useNavigate();
   const { openBookDemo } = useBookDemoModal();
@@ -171,8 +158,6 @@ function MobileIndustryLanding({
 
   const heroVideo = video || HERO_VIDEO_BY_SLUG[slug] || null;
 
-  // Any number of challenges, each with any number of cards. Only falls
-  // back to a single placeholder challenge if the data is missing/invalid.
   const safeChallenges =
     Array.isArray(challenges) && challenges.length > 0
       ? challenges
@@ -185,9 +170,10 @@ function MobileIndustryLanding({
   const selectedChallenge =
     openChallengeIndex !== null ? safeChallenges[openChallengeIndex] : null;
 
-const handleBackToIndustries = () => {
-  navigate("/#solutions");
-};
+  const handleBackToIndustries = () => {
+    navigate("/#solutions");
+  };
+
   return (
     <div className="industry-landing industry-landing--mobile">
       {/* Hero */}
@@ -513,6 +499,8 @@ function MobileChallengeOverlay({
  * is no preview/reveal step.
  * -------------------------------------------------------------------------- */
 function MobileIndustryCard({ card, backgroundImage, isVideo, isActive, onVideoEnded }) {
+  const [isMuted, setIsMuted] = useState(true);
+  
   // Video card: only thumbnail + play icon. No title / description ever.
   if (isVideo) {
     const videoSrc = card?.videoUrl || card?.video || null;
@@ -529,29 +517,45 @@ function MobileIndustryCard({ card, backgroundImage, isVideo, isActive, onVideoE
             : undefined
         }
       >
-        {/* Invisible driver for the onEnded-based auto-advance. Only
-            mounted/playing while this is the active slide, so we don't
-            play every video in the overlay at once. Purely functional —
-            no visual change to the card; the thumbnail + play icon below
-            are still the only things the user sees. */}
         {isActive && videoSrc && (
-          <video
-            key={videoSrc}
-            src={videoSrc}
-            autoPlay
-            muted
-            playsInline
-            onEnded={onVideoEnded}
-            style={{ display: "none" }}
-          />
+          <>
+            <video
+              key={videoSrc}
+              src={videoSrc}
+              autoPlay
+              muted={isMuted}
+              playsInline
+              onEnded={onVideoEnded}
+              style={{ 
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain', // Changed from 'cover'
+                background: '#000'
+              }}
+            />
+            <button
+              className="industry-card__sound-toggle"
+              onClick={() => setIsMuted(!isMuted)}
+              style={{
+                position: 'absolute',
+                bottom: '20px',
+                right: '20px',
+                zIndex: 10,
+                background: 'rgba(0,0,0,0.6)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '20px',
+                padding: '8px 16px',
+                fontSize: '14px'
+              }}
+            >
+              {isMuted ? "🔇 Sound" : "🔊 Sound on"}
+            </button>
+          </>
         )}
         <div className="industry-card__bg-overlay" />
-        <div className="industry-card__play" aria-hidden="true">
-          <svg viewBox="0 0 60 60" width="72" height="72">
-            <circle cx="30" cy="30" r="30" fill="rgba(0,0,0,0.55)" />
-            <polygon points="24,18 44,30 24,42" fill="#fff" />
-          </svg>
-        </div>
       </div>
     );
   }
@@ -607,12 +611,7 @@ function IndustryCTACard({ backgroundImage, onBookDemo }) {
           : undefined
       }
     >
-      <div className="industry-card__bg-overlay" />
-      <div className="industry-card__detail industry-card__detail--cta">
-        <span className="industry-card__cta-eyebrow">Ready to see it in action?</span>
-        <h3 className="industry-card__detail-title industry-card__cta-title">
-          Let&apos;s build your first campaign
-        </h3>
+      <div className="industry-card__cta-content">
         <button
           type="button"
           className="book-demo-btn industry-card__cta-button"

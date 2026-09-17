@@ -31,7 +31,7 @@ const industries = [
     className: "real-estate",
     heroTitle: "Real Estate",
     heroDescription:
-      "AI-driven engagement for developers and brokers — turning cold leads into site visits, and site visits into signed bookings.",
+      "AI-driven engagement for residential and commercial real estate | Turning cold leads into sample site visits, and sample site visits into signed bookings.",
     challenges: [
       {
         problem: "Single-digit lead-to-site-visit conversion from digital ads.",
@@ -39,14 +39,17 @@ const industries = [
           {
             title: "What this means",
             content:
-              "Real estate brands spend crores on Meta and Google, yet the average lead-to-site-visit conversion sits at 2–4%. Every lead gets the same generic brochure and a follow-up call that arrives 24 hours too late, by which time the prospect has already visited competitor sites.",
+              "Real estate brands spend millions on generating leads and yet the average lead-to-site-visit conversion is just 2–4%. Every lead gets the same generic brochure and a same follow-up spam call that arrives 24 hours too late. By then, the prospect has already visited many more competitor sites.",
           },
           {
             title: "Personlyze Intervention",
             content:
               "Trigger a personalised WhatsApp video within 5 minutes of form fill, featuring the prospect's name, the specific locality they enquired about, and a unit type matched to their stated budget.",
           },
-          { title: "Video" },
+          {
+            title: "Video",
+            videoUrl: "https://res.cloudinary.com/personlyzeai/video/upload/q_auto,f_auto/v1789378510/1.mp4"
+          },
           {
             title: "Why this works",
             content:

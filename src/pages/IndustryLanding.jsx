@@ -661,39 +661,24 @@ export default function IndustryLanding() {
                       </div>
                     );
                   })}
-                  <div
 
-  className="industry-carousel__slot"
-  key="book-demo"
-  ref={(el) => {
-    detailCardRefs.current[activeChallenge.cards.length] = el;
-  }}
->
-  <div
-    className="industry-card"
-    style={{
+  <div className="industry-carousel__slot" key="book-demo">
+  <div 
+    className="industry-card industry-card--cta" 
+    style={{ 
       backgroundImage: `url(${image})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
     }}
   >
-    <div className="industry-card__bg-overlay" />
-
-    <div className="industry-card__placeholder">
-      <span className="industry-card__placeholder-title">Book a Demo</span>
-    </div>
-
-    <div className="industry-card__detail">
-      <span className="industry-card__detail-label">Book a Demo</span>
-      <div className="industry-card__demo-btn-wrap">
-        <button
-          type="button"
-          className="industry-card__demo-btn"
-          onClick={openBookDemo}
-        >
-          Book a Demo <span>→</span>
-        </button>
-      </div>
+    <div className="industry-card__cta-content">
+      <button 
+        type="button" 
+        className="industry-card__demo-btn" 
+        onClick={openBookDemo}
+      >
+        Book a Demo <span>→</span>
+      </button>
     </div>
   </div>
 </div>
@@ -739,13 +724,79 @@ export default function IndustryLanding() {
   );
 }
 
-/* ========================================================================== */
-/*  DESKTOP CARD (hover-driven overlay, plus optional video face)           */
-/* ========================================================================== */
 function IndustryCard({ card, backgroundImage, label, isVideo }) {
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+
+  // Auto-play video when it becomes visible
+  useEffect(() => {
+    if (!isVideo || !videoRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Video is visible - play it muted
+            videoRef.current.play().catch(() => {});
+            setIsPlaying(true);
+          } else {
+            // Video is not visible - pause it
+            videoRef.current.pause();
+            setIsPlaying(false);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(videoRef.current);
+    return () => observer.disconnect();
+  }, [isVideo]);
+
+  const toggleSound = () => {
+    if (!videoRef.current) return;
+    videoRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
+
+  if (isVideo && card.videoUrl) {
+    return (
+      <div className="industry-card industry-card--video" tabIndex={0}>
+        <video
+          ref={videoRef}
+          className="industry-card__video"
+          src={card.videoUrl}
+          poster={backgroundImage}
+          autoPlay
+          muted={isMuted}
+          playsInline
+          loop={false}
+          preload="metadata"
+        />
+        <div className="industry-card__bg-overlay" />
+        
+        {/* Sound toggle button */}
+        <button 
+          className="industry-card__sound-toggle"
+          onClick={toggleSound}
+          aria-label={isMuted ? "Unmute video" : "Mute video"}
+        >
+          {isMuted ? "🔇 Tap for sound" : "🔊 Sound on"}
+        </button>
+
+        {/* Show title overlay when video is not playing or on hover */}
+        <div className="industry-card__placeholder">
+          <span className="industry-card__placeholder-title">{card.title}</span>
+        </div>
+      </div>
+    );
+  }
+
+  // ... rest of the existing non-video card code stays exactly the same
   return (
     <div
-      className={`industry-card${isVideo ? " industry-card--video" : ""}`}
+      className="industry-card"
       tabIndex={0}
       style={
         backgroundImage
@@ -758,20 +809,10 @@ function IndustryCard({ card, backgroundImage, label, isVideo }) {
       }
     >
       <div className="industry-card__bg-overlay" />
-      {isVideo && (
-        <div className="industry-card__play" aria-hidden="true">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-            <circle cx="32" cy="32" r="32" fill="rgba(0,0,0,0.45)" />
-            <path d="M26 20L46 32L26 44V20Z" fill="#fff" />
-          </svg>
-        </div>
-      )}
       <div className="industry-card__placeholder">
         <span className="industry-card__placeholder-title">{card.title}</span>
       </div>
       <div className="industry-card__detail">
-        {/* The label slot is always rendered (even if empty) so the title
-            sits at the exact same vertical position on every card. */}
         <span
           className="industry-card__detail-label"
           style={{ visibility: label ? "visible" : "hidden" }}

@@ -665,3 +665,77 @@
 .industry-card__demo-btn:active {
   transform: translateY(0);
 }
+
+/* Video Card Styles */
+.industry-card__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Changed from 'cover' to 'contain' */
+  background: #000; /* Black bars look better than empty space */
+}
+
+.industry-card__sound-toggle {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: background 0.3s ease;
+}
+
+.industry-card__sound-toggle:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* Hide placeholder when video is playing */
+.industry-card--video .industry-card__placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.industry-card--video:hover .industry-card__placeholder {
+  opacity: 1;
+}
+
+/* CTA Card - Clean version without hover effects */
+.industry-card--cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.industry-card--cta:hover,
+.industry-card--cta:focus-within {
+  transform: none; /* No lift effect */
+  box-shadow: 0 16px 36px rgba(19, 18, 18, 0.16); /* Keep default shadow */
+}
+
+.industry-card--cta .industry-card__bg-overlay {
+  display: none; /* Remove dark overlay */
+}
+
+.industry-card--cta .industry-card__placeholder {
+  display: none; /* Remove "Book a Demo" text from top */
+}
+
+.industry-card--cta .industry-card__detail {
+  display: none; /* Remove hover detail panel */
+}
+
+/* Center the button vertically and horizontally */
+.industry-card__cta-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
