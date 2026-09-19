@@ -825,3 +825,29 @@
   background: rgba(0, 0, 0, 0.5);
   transform: scale(1.05);
 }
+
+/* Force center the CTA content */
+.industry-card--mobile.industry-card--cta .industry-card__cta-content {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 10 !important;
+}
+
+/* Style the button to be more visible on mobile */
+.industry-card--mobile .industry-card__cta-button {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #000 !important;
+  border: none !important;
+  padding: 16px 32px !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}

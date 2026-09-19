@@ -607,15 +607,36 @@ function IndustryCTACard({ backgroundImage, onBookDemo }) {
               backgroundImage: `url(${backgroundImage})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
+              position: "relative",
             }
-          : undefined
+          : { position: "relative" }
       }
     >
-      <div className="industry-card__cta-content">
+      {/* Centered container with inline styles */}
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: 10,
+        }}
+      >
         <button
           type="button"
-          className="book-demo-btn industry-card__cta-button"
           onClick={onBookDemo}
+          style={{
+            background: "rgba(255, 255, 255, 0.95)",
+            color: "#000",
+            border: "none",
+            padding: "16px 32px",
+            borderRadius: "999px",
+            fontWeight: "700",
+            fontSize: "16px",
+            cursor: "pointer",
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+            whiteSpace: "nowrap",
+          }}
         >
           Book a Demo
         </button>
