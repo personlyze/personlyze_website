@@ -520,34 +520,33 @@ function MobileIndustryCard({ card, backgroundImage, isVideo, isActive, onVideoE
         {isActive && videoSrc && (
           <>
             <video
-              key={videoSrc}
-              src={videoSrc}
-              autoPlay
-              muted={isMuted}
-              playsInline
-              webkit-playsinline="true"
-              onEnded={onVideoEnded}
-              onStalled={(e) => {
-                // If video stalls, try to reload it
-                console.log("Video stalled, reloading...");
-                e.target.load();
-                e.target.play().catch(() => {});
-              }}
-              onError={(e) => {
-                console.error("Video error:", e);
-              }}
-              preload="auto"
-              style={{ 
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
-                background: '#000'
-              }}
-            />
+  key={videoSrc}
+  src={videoSrc}
+  autoPlay
+  muted={isMuted}
+  playsInline
+  webkit-playsinline="true"
+  onEnded={onVideoEnded}
+  preload="metadata"
+  onStalled={(e) => {
+    console.log("Video stalled");
+    e.target.load();
+    e.target.play().catch(() => {});
+  }}
+  style={{ 
+    position: 'absolute',
+    inset: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'contain',
+    background: '#000',
+    /* Force hardware acceleration off to prevent freezing */
+    transform: 'translateZ(0)',
+    willChange: 'auto'
+  }}
+/>
 
-            
+
             <button
               className="industry-card__sound-toggle"
               onClick={() => setIsMuted(!isMuted)}
