@@ -48,7 +48,7 @@ const industries = [
           },
           {
             title: "Video",
-            videoUrl: "https://res.cloudinary.com/personlyzeai/video/upload/q_auto,f_auto/v1789378510/1.mp4"
+            videoUrl: "https://res.cloudinary.com/personlyzeai/video/upload/q_auto:good,f_mp4,vc_h264,w_720/v1789378510/1.mp4"
           },
           {
             title: "Why this works",
