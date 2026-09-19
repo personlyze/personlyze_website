@@ -14,6 +14,7 @@ import b2bVideo from "../assets/b2b.mp4";
 import fashionVideo from "../assets/fashion.mp4";
 import internalCommsVideo from "../assets/internal-comms.mp4";
 import govtPoliticsVideo from "../assets/govt-politics.mp4";
+import { Video } from 'cloudinary-react';
 
 /* --------------------------------------------------------------------------
  * Image lookups (shared prefix map for both card photos and problem photos)
@@ -501,9 +502,18 @@ function MobileChallengeOverlay({
 function MobileIndustryCard({ card, backgroundImage, isVideo, isActive, onVideoEnded }) {
   const [isMuted, setIsMuted] = useState(true);
   
-  // Video card: only thumbnail + play icon. No title / description ever.
+  // Extract Cloudinary public ID from URL
+  const getCloudinaryId = (url) => {
+    if (!url) return null;
+    const match = url.match(/\/v\d+\/(.+)\.mp4$/);
+    return match ? match[1] : null;
+  };
+  
+  // Video card
   if (isVideo) {
     const videoSrc = card?.videoUrl || card?.video || null;
+    const cloudinaryId = getCloudinaryId(videoSrc);
+    
     return (
       <div
         className="industry-card industry-card--mobile industry-card--video"
@@ -519,34 +529,48 @@ function MobileIndustryCard({ card, backgroundImage, isVideo, isActive, onVideoE
       >
         {isActive && videoSrc && (
           <>
-            <video
-  key={videoSrc}
-  src={videoSrc}
-  autoPlay
-  muted={isMuted}
-  playsInline
-  webkit-playsinline="true"
-  onEnded={onVideoEnded}
-  preload="metadata"
-  onStalled={(e) => {
-    console.log("Video stalled");
-    e.target.load();
-    e.target.play().catch(() => {});
-  }}
-  style={{ 
-    position: 'absolute',
-    inset: 0,
-    width: '100%',
-    height: '100%',
-    objectFit: 'contain',
-    background: '#000',
-    /* Force hardware acceleration off to prevent freezing */
-    transform: 'translateZ(0)',
-    willChange: 'auto'
-  }}
-/>
-
-
+            {cloudinaryId ? (
+              <Video
+                cloudName="personlyzeai"
+                publicId={cloudinaryId}
+                autoPlay
+                muted={isMuted}
+                playsInline
+                onEnded={onVideoEnded}
+                controls={false}
+                style={{ 
+                  position: 'absolute',
+                  inset: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  background: '#000'
+                }}
+                transformation={{
+                  quality: 'auto:low',
+                  fetchFormat: 'mp4',
+                  width: 640,
+                  crop: 'limit'
+                }}
+              />
+            ) : (
+              <video
+                src={videoSrc}
+                autoPlay
+                muted={isMuted}
+                playsInline
+                onEnded={onVideoEnded}
+                preload="metadata"
+                style={{ 
+                  position: 'absolute',
+                  inset: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  background: '#000'
+                }}
+              />
+            )}
             <button
               className="industry-card__sound-toggle"
               onClick={() => setIsMuted(!isMuted)}
@@ -572,6 +596,7 @@ function MobileIndustryCard({ card, backgroundImage, isVideo, isActive, onVideoE
     );
   }
 
+  // Regular non-video card (keep your existing code here)
   return (
     <div
       className="industry-card industry-card--mobile"

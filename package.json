@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "cloudinary-react": "^1.8.1",
     "framer-motion": "^12.40.0",
     "gsap": "^3.15.0",
     "puppeteer": "^25.8.0",
